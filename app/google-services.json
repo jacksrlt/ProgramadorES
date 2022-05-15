@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "74835878389",
+    "project_id": "programadores-ffb69",
+    "storage_bucket": "programadores-ffb69.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:74835878389:android:3ab32f97bd6053f4de00bc",
+        "android_client_info": {
+          "package_name": "com.ja.programadores"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "74835878389-2otutnefekl9m3ablh665nujdo8krmh3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDznxw26e86m6P5tzHpEEFkn-auz6IfQ7c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "74835878389-2otutnefekl9m3ablh665nujdo8krmh3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
