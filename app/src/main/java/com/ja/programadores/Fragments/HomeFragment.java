@@ -29,11 +29,9 @@ import java.util.Map;
 public class HomeFragment extends Fragment {
 
     private DatabaseReference postDatabase;
-    //private DatabaseReference userDatabase;
     AdapterHome adapterHome;
     private RecyclerView recyclerViewHome;
     ArrayList<Post> messageList = new ArrayList<>();
-    ;
 
     String mProfileImageUrl;
     ProgressDialog progressDialog;
