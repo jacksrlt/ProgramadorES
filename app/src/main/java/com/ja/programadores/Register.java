@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class Register extends AppCompatActivity {
 
-    private EditText nameEt, emailEt, passwordEt, password2Et;
+    private EditText emailEt, passwordEt, password2Et;
     private Button registerBt;
     private FirebaseAuth mAuth;
     FirebaseFirestore fStore;
@@ -40,7 +40,6 @@ public class Register extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
 
         //Inicializar vistas
-        nameEt = findViewById(R.id.nameEt);
         emailEt = findViewById(R.id.emailEt);
         passwordEt = findViewById(R.id.passwordEt);
         password2Et = findViewById(R.id.password2Et);
@@ -57,8 +56,7 @@ public class Register extends AppCompatActivity {
 
     private void registerNewUser() {
         //Tomar los valores de los EditText como String
-        String name, email, password, password2;
-        name = nameEt.getText().toString();
+        String email, password, password2;
         email = emailEt.getText().toString();
         password = passwordEt.getText().toString();
         password2 = password2Et.getText().toString();
@@ -74,14 +72,6 @@ public class Register extends AppCompatActivity {
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(getApplicationContext(),
                             "Por favor, inserte una contraseña",
-                            Toast.LENGTH_LONG)
-                    .show();
-            return;
-        }
-
-        if (TextUtils.isEmpty(name)) {
-            Toast.makeText(getApplicationContext(),
-                            "Por favor, inserte su nombre",
                             Toast.LENGTH_LONG)
                     .show();
             return;
@@ -108,11 +98,11 @@ public class Register extends AppCompatActivity {
                                             Toast.LENGTH_LONG)
                                     .show();
 
-                            //Crear colección para usuario con UID y añadir nombre de usuario
+                            //Crear colección para usuario con UID y poner el valor 'first' a true
                             userUID = mAuth.getCurrentUser().getUid();
-                            DocumentReference documentReference = fStore.collection("users").document(userUID);
-                            Map<String, Object> userData = new HashMap<>();
-                            userData.put("name", name);
+                            DocumentReference documentReference = fStore.collection("Users").document(userUID);
+                            Map<String, Boolean> userData = new HashMap<>();
+                            userData.put("first", true);
                             documentReference.set(userData);
                             //Enviar a login si el usuario fue creado
                             Intent intent

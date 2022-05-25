@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateProfile">
+
+    <TextView
+        android:id="@+id/avatarText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Elige una imágen de perfil"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/profileIv"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/ic_linkedin"
+        app:layout_constraintStart_toStartOf="@+id/avatarText"
+        app:layout_constraintTop_toBottomOf="@+id/avatarText" />
+
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="41dp"
+        android:layout_marginBottom="26dp"
+        android:text="¿Cuál es tu nombre?"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/nameEt"
+        app:layout_constraintStart_toStartOf="@+id/nameEt" />
+
+    <EditText
+        android:id="@+id/nameEt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="20dp"
+        android:ems="10"
+        android:hint="Ingresa tu nombre"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/bioText"
+        app:layout_constraintStart_toStartOf="@+id/bioEt" />
+
+    <TextView
+        android:id="@+id/bioText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="54dp"
+        android:layout_marginEnd="54dp"
+        android:layout_marginBottom="15dp"
+        android:text="Algo sobre ti"
+        app:layout_constraintBottom_toTopOf="@+id/bioEt"
+        app:layout_constraintEnd_toEndOf="@+id/nameEt"
+        app:layout_constraintStart_toStartOf="@+id/avatarText" />
+
+    <EditText
+        android:id="@+id/bioEt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        android:ems="10"
+        android:hint="Ingresa una biografía"
+        app:layout_constraintBottom_toTopOf="@+id/linkedinText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/linkedinText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="13dp"
+        android:text="LinkedIn"
+        app:layout_constraintBottom_toTopOf="@+id/linkedinEt"
+        app:layout_constraintEnd_toEndOf="@+id/progressBar" />
+
+    <EditText
+        android:id="@+id/linkedinEt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:layout_marginBottom="18dp"
+        android:ems="10"
+        android:hint="URL de tu LinkedIn"
+        app:layout_constraintBottom_toTopOf="@+id/githubText"
+        app:layout_constraintStart_toStartOf="@+id/bioEt" />
+
+    <TextView
+        android:id="@+id/githubText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="GitHub"
+        app:layout_constraintBottom_toTopOf="@+id/githubEt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/githubEt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="34dp"
+        android:ems="10"
+        android:hint="URL de tu GitHub"
+        app:layout_constraintBottom_toTopOf="@+id/saveBt"
+        app:layout_constraintStart_toStartOf="@+id/linkedinEt" />
+
+    <Button
+        android:id="@+id/saveBt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="41dp"
+        android:text="Guardar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="13dp"
+        app:layout_constraintStart_toStartOf="@+id/bioText"
+        app:layout_constraintTop_toTopOf="@+id/bioText" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,10 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Login extends AppCompatActivity {
 
@@ -22,14 +26,16 @@ public class Login extends AppCompatActivity {
     private Button loginBt;
     private Button registerBt;
     private FirebaseAuth mAuth;
+    FirebaseFirestore fStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //Instancia de FirebaseAuth
+        //Instancia de FirebaseAuth y Firestore
         mAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
 
         //Inicializar vistas
         emailEt = findViewById(R.id.emailEt);
@@ -88,17 +94,37 @@ public class Login extends AppCompatActivity {
                                     @NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(getApplicationContext(),
-                                                    "Bienvenid@",
+                                                    "Se ha iniciado sesión",
                                                     Toast.LENGTH_LONG)
                                             .show();
 
                                     //Si se inicia sesión
-                                    //Intent a activity home
-                                    Intent intent
-                                            = new Intent(Login.this,
-                                            NavigationDrawer.class);
-                                    startActivity(intent);
-                                    finish();
+                                    DocumentReference docRef = fStore.collection("Users").document(mAuth.getCurrentUser().getUid());
+                                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                DocumentSnapshot document = task.getResult();
+                                                if (document.exists()) {
+                                                    if (document.getBoolean("first") == true) {
+                                                        //Intent a activity CreateProfile
+                                                        Intent intent
+                                                                = new Intent(Login.this,
+                                                                CreateProfile.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    } else {
+                                                        //Intent a NavigationDrawer
+                                                        Intent intent
+                                                                = new Intent(Login.this,
+                                                                NavigationDrawer.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    });
                                 } else {
 
                                     //Inicio de sesión fallido

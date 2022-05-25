@@ -7,15 +7,6 @@
     tools:context=".Register">
 
     <EditText
-        android:id="@+id/nameEt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="173dp"
-        android:layout_marginBottom="33dp"
-        app:layout_constraintBottom_toTopOf="@+id/emailEt"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
         android:id="@+id/emailEt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
