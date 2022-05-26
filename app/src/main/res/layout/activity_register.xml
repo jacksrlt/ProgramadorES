@@ -10,26 +10,29 @@
         android:id="@+id/emailEt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginBottom="27dp"
-        app:layout_constraintBottom_toTopOf="@+id/passwordEt"
-        app:layout_constraintStart_toStartOf="@+id/passwordEt" />
+        android:layout_marginTop="195dp"
+        android:hint="Ingrese su correo electrónico"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/passwordEt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/nameEt"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="10dp"
+        android:hint="Ingrese su contraseña"
+        app:layout_constraintStart_toStartOf="@+id/emailEt"
+        app:layout_constraintTop_toBottomOf="@+id/emailEt" />
 
     <EditText
         android:id="@+id/password2Et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="14dp"
+        android:hint="Repita su contraseña"
         app:layout_constraintStart_toStartOf="@+id/passwordEt"
         app:layout_constraintTop_toBottomOf="@+id/passwordEt" />
 
@@ -37,9 +40,9 @@
         android:id="@+id/registerBt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="19dp"
+        android:text="Registrarse"
+        app:layout_constraintEnd_toEndOf="@+id/password2Et"
         app:layout_constraintTop_toBottomOf="@+id/password2Et" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,13 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_height="150dp"
-    android:background="@android:color/holo_blue_bright"
+    android:background="@color/azul"
     android:gravity="bottom"
     android:padding="8dp"
     android:layout_width="match_parent">
 
     <ImageView
         android:id="@+id/avatar"
+        android:src="@drawable/picplaceholder"
         android:layout_width="60dp"
         android:layout_height="60dp"/>
 
