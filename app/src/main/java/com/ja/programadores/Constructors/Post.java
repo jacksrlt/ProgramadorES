@@ -1,40 +1,73 @@
 package com.ja.programadores.Constructors;
 
+import com.google.firebase.database.ServerValue;
+
 public class Post {
 
-    String useruid, message, image;
+    private String postKey;
+    private String title;
+    private String content;
+    private String picture;
+    private String userUid;
+    private Object timeStamp;
+
+    public Post(String title, String content, String picture, String userUid) {
+        this.title = title;
+        this.content = content;
+        this.picture = picture;
+        this.userUid = userUid;
+        this.timeStamp = ServerValue.TIMESTAMP;
+    }
 
     public Post() {
     }
 
-    public Post(String useruid, String message, String image) {
-        this.useruid = useruid;
-        this.message = message;
-        this.image = image;
+
+    public String getPostKey() {
+        return postKey;
     }
 
-    public String getImage() {
-        return image;
+    public void setPostKey(String postKey) {
+        this.postKey = postKey;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public String getTitle() {
+        return title;
     }
 
-    public String getUseruid() {
-        return useruid;
+    public String getContent() {
+        return content;
     }
 
-    public void setUseruid(String useruid) {
-        this.useruid = useruid;
+    public String getPicture() {
+        return picture;
     }
 
-    public String getMessage() {
-        return message;
+    public String getUserUid() {
+        return userUid;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public Object getTimeStamp() {
+        return timeStamp;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public void setUserUid(String userUid) {
+        this.userUid = userUid;
+    }
+
+    public void setTimeStamp(Object timeStamp) {
+        this.timeStamp = timeStamp;
+    }
 }
