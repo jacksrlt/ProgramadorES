@@ -7,21 +7,26 @@ public class Post {
     private String postKey;
     private String title;
     private String content;
-    private String picture;
-    private String userUid;
-    private Object timeStamp;
+    private String image;
+    private String name;
+    private String avatar;
+    private Object timestamp;
 
-    public Post(String title, String content, String picture, String userUid) {
+    public Post(String title, String content, String image, String name, String avatar) {
         this.title = title;
         this.content = content;
-        this.picture = picture;
-        this.userUid = userUid;
-        this.timeStamp = ServerValue.TIMESTAMP;
+        this.image = image;
+        this.name = name;
+        this.avatar = avatar;
+        this.timestamp = ServerValue.TIMESTAMP;
     }
 
     public Post() {
     }
 
+    public String getAvatar() {return avatar;}
+
+    public void setAvatar(String avatar) {this.avatar = avatar;}
 
     public String getPostKey() {
         return postKey;
@@ -39,16 +44,16 @@ public class Post {
         return content;
     }
 
-    public String getPicture() {
-        return picture;
+    public String getImage() {
+        return image;
     }
 
-    public String getUserUid() {
-        return userUid;
+    public String getName() {
+        return name;
     }
 
-    public Object getTimeStamp() {
-        return timeStamp;
+    public Object getTimestamp() {
+        return timestamp;
     }
 
     public void setTitle(String title) {
@@ -59,15 +64,15 @@ public class Post {
         this.content = content;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public void setUserUid(String userUid) {
-        this.userUid = userUid;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setTimeStamp(Object timeStamp) {
-        this.timeStamp = timeStamp;
+    public void setTimestamp(Object timestamp) {
+        this.timestamp = timestamp;
     }
 }
