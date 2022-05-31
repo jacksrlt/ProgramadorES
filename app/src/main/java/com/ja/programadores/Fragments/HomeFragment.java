@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -56,6 +57,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadPosts() {
+
         Query postQuery = collectionReferencePosts.orderBy("timestamp", Query.Direction.DESCENDING);
         postQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -66,20 +68,17 @@ public class HomeFragment extends Fragment {
                     post.setContent(document.getString("content"));
                     post.setImage(document.getString("image"));
                     String posterUid = document.getString("useruid");
-                    DocumentReference docRef = collectionReferenceUsers.document(posterUid);
-                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    DocumentReference userRef = collectionReferenceUsers.document(posterUid);
+                    userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                DocumentSnapshot document = task.getResult();
-                                post.setName(document.getString("name").toString());
-                                post.setAvatar(document.getString("image").toString());
-                            }
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            post.setName(documentSnapshot.getString("name"));
+                            post.setAvatar(documentSnapshot.getString("image"));
+                            postList.add(post);
+                            postAdapter.notifyDataSetChanged();
                         }
                     });
-                    postList.add(post);
                 }
-                postAdapter.notifyDataSetChanged();
             }
         });
     }
