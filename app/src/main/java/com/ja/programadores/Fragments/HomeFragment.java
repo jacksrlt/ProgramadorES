@@ -50,7 +50,6 @@ public class HomeFragment extends Fragment {
         postList = new ArrayList<>();
         postAdapter = new PostAdapter(getActivity(), postList);
         postRecyclerView.setAdapter(postAdapter);
-        postRecyclerView.setItemViewCacheSize(2);
         loadPosts();
 
         return view;
@@ -67,6 +66,8 @@ public class HomeFragment extends Fragment {
                     post.setTitle(document.getString("title"));
                     post.setContent(document.getString("content"));
                     post.setImage(document.getString("image"));
+                    post.setPostKey(document.getId());
+                    post.setTimestamp(document.get("timestamp"));
                     String posterUid = document.getString("useruid");
                     DocumentReference userRef = collectionReferenceUsers.document(posterUid);
                     userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {

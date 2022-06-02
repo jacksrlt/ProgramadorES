@@ -24,12 +24,13 @@
             android:layout_height="match_parent" >
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="24dp"
+                android:layout_marginRight="24dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="316dp"
-                android:layout_marginTop="534dp"
                 android:src="@drawable/ic_add" />
         </FrameLayout>
 

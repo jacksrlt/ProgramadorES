@@ -1,6 +1,7 @@
 package com.ja.programadores.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.Timestamp;
 import com.ja.programadores.Constructors.Post;
+import com.ja.programadores.PostDetail;
 import com.ja.programadores.R;
 
+import java.util.Date;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> {
@@ -30,7 +34,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View row = LayoutInflater.from(mContext).inflate(R.layout.picture_posts_layout, parent, false);
+        View row = LayoutInflater.from(mContext).inflate(R.layout.posts_layout, parent, false);
 
         return new MyViewHolder(row);
     }
@@ -61,6 +65,28 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
             tvTitle = itemView.findViewById(R.id.row_post_title);
             imgPost = itemView.findViewById(R.id.row_post_img);
             imgPostProfile = itemView.findViewById(R.id.row_post_profile_img);
+
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent postDetail = new Intent(mContext,PostDetail.class);
+                    int position = getAdapterPosition();
+
+                    postDetail.putExtra("title",mData.get(position).getTitle());
+                    postDetail.putExtra("image",mData.get(position).getImage());
+                    postDetail.putExtra("content",mData.get(position).getContent());
+                    postDetail.putExtra("postkey",mData.get(position).getPostKey());
+                    postDetail.putExtra("avatar",mData.get(position).getAvatar());
+                    postDetail.putExtra("name",mData.get(position).getName());
+                    Timestamp timestamp  = (Timestamp) mData.get(position).getTimestamp();
+                    postDetail.putExtra("timestamp",timestamp) ;
+                    mContext.startActivity(postDetail);
+
+                }
+            });
+
+
         }
     }
 }
