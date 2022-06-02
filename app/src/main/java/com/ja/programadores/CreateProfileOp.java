@@ -32,7 +32,7 @@ import com.ja.programadores.Drawers.NavigationDrawer;
 
 import java.util.HashMap;
 
-public class CreateProfile extends AppCompatActivity {
+public class CreateProfileOp extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     FirebaseFirestore fStore;
@@ -43,23 +43,22 @@ public class CreateProfile extends AppCompatActivity {
     static int PReqCode = 1;
     static int REQUESCODE = 1;
     Uri pickedImgUri;
-    private EditText nameEt, bioEt, linkedinEt, githubEt;
+    private EditText nameEt, descEt, webEt;
     Button saveBt;
     private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_profile);
+        setContentView(R.layout.activity_create_profile_op);
 
         mAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         storageProfilePicRef = FirebaseStorage.getInstance().getReference().child("users_photos");
 
         nameEt = findViewById(R.id.nameEt);
-        bioEt = findViewById(R.id.descEt);
-        linkedinEt = findViewById(R.id.webEt);
-        githubEt = findViewById(R.id.githubEt);
+        descEt = findViewById(R.id.descEt);
+        webEt = findViewById(R.id.webEt);
         progressBar = findViewById(R.id.progressBar);
 
         progressBar.setVisibility(View.INVISIBLE);
@@ -82,24 +81,23 @@ public class CreateProfile extends AppCompatActivity {
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
                 final String name = nameEt.getText().toString();
-                final String bio = bioEt.getText().toString();
-                final String linkedin = linkedinEt.getText().toString();
-                final String github = githubEt.getText().toString();
+                final String desc = descEt.getText().toString();
+                final String web = webEt.getText().toString();
                 if (pickedImgUri == null) {
-                    Toast.makeText(CreateProfile.this, "Debe seleccionar una imagen de perfil", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateProfileOp.this, "Debe seleccionar una imagen de perfil", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.INVISIBLE);
-                } else if (name.isEmpty() || bio.isEmpty() || linkedin.isEmpty() || github.isEmpty()) {
-                    Toast.makeText(CreateProfile.this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
+                } else if (name.isEmpty() || desc.isEmpty() || web.isEmpty()) {
+                    Toast.makeText(CreateProfileOp.this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.INVISIBLE);
                 } else {
-                    SaveProfile(name, bio, linkedin, github, pickedImgUri, mAuth.getCurrentUser());
+                    SaveProfile(name, desc, web, pickedImgUri, mAuth.getCurrentUser());
                 }
             }
         });
 
     }
 
-    private void SaveProfile(String name, String bio, String linkedin, String github, Uri pickedImgUri, FirebaseUser currentUser) {
+    private void SaveProfile(String name, String desc, String web, Uri pickedImgUri, FirebaseUser currentUser) {
 
         StorageReference imageFilePath = storageProfilePicRef.child(mAuth.getCurrentUser().getUid()+".jpg");
         uploadTask = imageFilePath.putFile(pickedImgUri);
@@ -122,9 +120,8 @@ public class CreateProfile extends AppCompatActivity {
                     HashMap<String, Object> userMap = new HashMap();
                     userMap.put("image", myUri);
                     userMap.put("name", name);
-                    userMap.put("bio", bio);
-                    userMap.put("linkedin", linkedin);
-                    userMap.put("github", github);
+                    userMap.put("desc", desc);
+                    userMap.put("web", web);
                     userMap.put("first", false);
 
                     String userUID = mAuth.getCurrentUser().getUid();
@@ -132,7 +129,7 @@ public class CreateProfile extends AppCompatActivity {
                     documentReference.set(userMap);
 
                     Intent intent
-                            = new Intent(CreateProfile.this,
+                            = new Intent(CreateProfileOp.this,
                             NavigationDrawer.class);
                     startActivity(intent);
                     finish();
@@ -145,12 +142,12 @@ public class CreateProfile extends AppCompatActivity {
     }
 
     private void checkAndRequestForPermission() {
-        if(ContextCompat.checkSelfPermission(CreateProfile.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+        if(ContextCompat.checkSelfPermission(CreateProfileOp.this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(CreateProfile.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                Toast.makeText(CreateProfile.this, "Debe aceptar los permisos", Toast.LENGTH_SHORT).show();
+            if (ActivityCompat.shouldShowRequestPermissionRationale(CreateProfileOp.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                Toast.makeText(CreateProfileOp.this, "Debe aceptar los permisos", Toast.LENGTH_SHORT).show();
             } else {
-                ActivityCompat.requestPermissions(CreateProfile.this,
+                ActivityCompat.requestPermissions(CreateProfileOp.this,
                         new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, PReqCode);
             }
         } else {

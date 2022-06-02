@@ -10,19 +10,22 @@
         android:id="@+id/emailEt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="195dp"
+        android:layout_marginBottom="10dp"
         android:hint="Ingrese su correo electrónico"
+        app:layout_constraintBottom_toTopOf="@+id/passwordEt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <EditText
         android:id="@+id/passwordEt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="14dp"
         android:hint="Ingrese su contraseña"
+        app:layout_constraintBottom_toTopOf="@+id/password2Et"
         app:layout_constraintStart_toStartOf="@+id/emailEt"
         app:layout_constraintTop_toBottomOf="@+id/emailEt" />
 
@@ -31,8 +34,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginBottom="14dp"
         android:hint="Repita su contraseña"
+        app:layout_constraintBottom_toTopOf="@+id/registerBt"
         app:layout_constraintStart_toStartOf="@+id/passwordEt"
         app:layout_constraintTop_toBottomOf="@+id/passwordEt" />
 
@@ -40,9 +44,22 @@
         android:id="@+id/registerBt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="19dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="20dp"
         android:text="Registrarse"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox"
         app:layout_constraintEnd_toEndOf="@+id/password2Et"
         app:layout_constraintTop_toBottomOf="@+id/password2Et" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="Soy una cuenta de empresa"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerBt" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

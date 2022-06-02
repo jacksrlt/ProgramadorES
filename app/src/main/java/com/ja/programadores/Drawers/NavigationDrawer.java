@@ -1,56 +1,40 @@
-package com.ja.programadores;
+package com.ja.programadores.Drawers;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.Manifest;
-import android.app.Dialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.ja.programadores.Constructors.Post;
+import com.ja.programadores.CreatePost;
 import com.ja.programadores.Fragments.BoardFragment;
 import com.ja.programadores.Fragments.DirectFragment;
 import com.ja.programadores.Fragments.HomeFragment;
 import com.ja.programadores.Fragments.ProfileFragment;
+import com.ja.programadores.Fragments.ProfileFragmentOp;
+import com.ja.programadores.R;
 
 public class NavigationDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -62,6 +46,7 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
     Toolbar toolbar;
     ActionBarDrawerToggle toggle;
     FirebaseDatabase firebaseDatabase;
+    Boolean op;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,12 +87,20 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
                         Glide.with(getApplicationContext())
                                 .load(document.getString("image").toString())
                                 .into(avatar);
+                        op = document.getBoolean("op");
                     }
                 }
             }
         });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        if (op = true) {
+            fab.setClickable(false);
+            fab.setEnabled(false);
+            fab.setVisibility(View.GONE);
+        }
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,8 +139,13 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
                 ft.replace(R.id.content, new HomeFragment()).commit();
                 break;
             case R.id.nav_profile:
-                ft.replace(R.id.content, new ProfileFragment()).commit();
-                break;
+                if (op != true) {
+                    ft.replace(R.id.content, new ProfileFragment()).commit();
+                    break;
+                } else {
+                    ft.replace(R.id.content, new ProfileFragmentOp()).commit();
+                    break;
+                }
             case R.id.nav_md:
                 ft.replace(R.id.content, new DirectFragment()).commit();
                 break;

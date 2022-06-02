@@ -25,8 +25,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,8 +32,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
-import com.ja.programadores.Fragments.HomeFragment;
-import com.ja.programadores.Fragments.ProfileFragment;
+import com.ja.programadores.Drawers.NavigationDrawer;
 
 import java.util.HashMap;
 
@@ -64,8 +61,8 @@ public class EditProfile extends AppCompatActivity {
         storageProfilePicRef = FirebaseStorage.getInstance().getReference().child("users_photos");
 
         nameEt = findViewById(R.id.nameEt);
-        bioEt = findViewById(R.id.bioEt);
-        linkedinEt = findViewById(R.id.linkedinEt);
+        bioEt = findViewById(R.id.descEt);
+        linkedinEt = findViewById(R.id.webEt);
         githubEt = findViewById(R.id.githubEt);
         progressBar = findViewById(R.id.progressBar);
         saveBt = findViewById(R.id.saveBt);

@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -19,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.ja.programadores.Drawers.NavigationDrawer;
 
 public class Login extends AppCompatActivity {
 
@@ -108,11 +108,19 @@ public class Login extends AppCompatActivity {
                                                 if (document.exists()) {
                                                     if (document.getBoolean("first") == true) {
                                                         //Intent a activity CreateProfile
-                                                        Intent intent
-                                                                = new Intent(Login.this,
-                                                                CreateProfile.class);
-                                                        startActivity(intent);
-                                                        finish();
+                                                        if (document.getBoolean("op") != true) {
+                                                            Intent intent
+                                                                    = new Intent(Login.this,
+                                                                    CreateProfile.class);
+                                                            startActivity(intent);
+                                                            finish();
+                                                        } else {
+                                                            Intent intent
+                                                                    = new Intent(Login.this,
+                                                                    CreateProfileOp.class);
+                                                            startActivity(intent);
+                                                            finish();
+                                                        }
                                                     } else {
                                                         //Intent a NavigationDrawer
                                                         Intent intent

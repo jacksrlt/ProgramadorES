@@ -32,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/profileIv" />
 
     <TextView
-        android:id="@+id/bioEt"
+        android:id="@+id/descEt"
         app:layout_constraintEnd_toEndOf="@id/guideline3"
         app:layout_constraintStart_toStartOf="@id/guideline2"
         android:layout_width="wrap_content"
@@ -54,14 +54,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="54dp"
         android:text="Usuario de GitHub"
-        app:layout_constraintTop_toBottomOf="@+id/bioEt" />
+        app:layout_constraintTop_toBottomOf="@+id/descEt" />
 
     <TextView
         app:layout_constraintEnd_toEndOf="@id/guideline3"
         app:layout_constraintStart_toStartOf="@id/guideline2"
         android:drawableLeft="@drawable/ic_linkedin"
         android:drawablePadding="4dp"
-        android:id="@+id/linkedinEt"
+        android:id="@+id/webEt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,8 +26,10 @@ import java.util.Map;
 public class Register extends AppCompatActivity {
 
     private EditText emailEt, passwordEt, password2Et;
+    private CheckBox checkBox;
     private Button registerBt;
     private FirebaseAuth mAuth;
+    private boolean check;
     FirebaseFirestore fStore;
     String userUID;
 
@@ -44,6 +47,7 @@ public class Register extends AppCompatActivity {
         passwordEt = findViewById(R.id.passwordEt);
         password2Et = findViewById(R.id.password2Et);
         registerBt = findViewById(R.id.registerBt);
+        checkBox = (CheckBox) findViewById(R.id.checkBox);
 
         //Onclick Listener en Botón de registro
         registerBt.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +64,7 @@ public class Register extends AppCompatActivity {
         email = emailEt.getText().toString();
         password = passwordEt.getText().toString();
         password2 = password2Et.getText().toString();
+        check = checkBox.isChecked();
 
         //Validación de email, contraseña y usuario
         if (TextUtils.isEmpty(email)) {
@@ -102,6 +107,11 @@ public class Register extends AppCompatActivity {
                             userUID = mAuth.getCurrentUser().getUid();
                             DocumentReference documentReference = fStore.collection("Users").document(userUID);
                             Map<String, Boolean> userData = new HashMap<>();
+                            if (check = true) {
+                                userData.put("op", true);
+                            } else {
+                                userData.put("op", false);
+                            }
                             userData.put("first", true);
                             documentReference.set(userData);
                             //Enviar a login si el usuario fue creado

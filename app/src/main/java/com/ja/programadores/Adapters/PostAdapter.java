@@ -17,7 +17,6 @@ import com.ja.programadores.Constructors.Post;
 import com.ja.programadores.PostDetail;
 import com.ja.programadores.R;
 
-import java.util.Date;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> {
@@ -34,7 +33,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View row = LayoutInflater.from(mContext).inflate(R.layout.posts_layout, parent, false);
+        View row = LayoutInflater.from(mContext).inflate(R.layout.post_layout, parent, false);
 
         return new MyViewHolder(row);
     }

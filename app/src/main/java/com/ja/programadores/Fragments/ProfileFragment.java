@@ -21,9 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.ja.programadores.CreatePost;
 import com.ja.programadores.EditProfile;
-import com.ja.programadores.NavigationDrawer;
 import com.ja.programadores.R;
 
 public class ProfileFragment extends Fragment {
@@ -51,9 +49,9 @@ public class ProfileFragment extends Fragment {
         fStore = FirebaseFirestore.getInstance();
         profileIv = view.findViewById(R.id.profileIv);
         nameTv = view.findViewById(R.id.nameEt);
-        bioTv = view.findViewById(R.id.bioEt);
+        bioTv = view.findViewById(R.id.descEt);
         githubTv = view.findViewById(R.id.githubEt);
-        linkedinTv = view.findViewById(R.id.linkedinEt);
+        linkedinTv = view.findViewById(R.id.webEt);
         showProfile();
         return view;
     }
