@@ -11,17 +11,27 @@ public class Post {
     private String name;
     private String avatar;
     private Object timestamp;
+    private int likes;
 
-    public Post(String title, String content, String image, String name, String avatar) {
+    public Post(String title, String content, String image, String name, String avatar, int likes) {
         this.title = title;
         this.content = content;
         this.image = image;
         this.name = name;
         this.avatar = avatar;
+        this.likes = likes;
         this.timestamp = ServerValue.TIMESTAMP;
     }
 
     public Post() {
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 
     public String getAvatar() {return avatar;}

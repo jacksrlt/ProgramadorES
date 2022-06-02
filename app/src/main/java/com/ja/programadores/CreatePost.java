@@ -137,6 +137,7 @@ public class CreatePost extends AppCompatActivity {
                         post.put("content", content);
                         post.put("useruid", useruid);
                         post.put("timestamp", myTimeStamp);
+                        post.put("likes", 0);
 
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef = database.getReference("Posts").push();
@@ -163,6 +164,7 @@ public class CreatePost extends AppCompatActivity {
             post.put("content", content);
             post.put("useruid", useruid);
             post.put("timestamp", myTimeStamp);
+            post.put("likes", 0);
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("Posts").push();

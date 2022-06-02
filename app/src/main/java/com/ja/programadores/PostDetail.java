@@ -3,23 +3,44 @@ package com.ja.programadores;
 
 import android.os.Bundle;
 
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.ja.programadores.Adapters.CommentAdapter;
+import com.ja.programadores.Adapters.PostAdapter;
+import com.ja.programadores.Constructors.Comment;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 public class PostDetail extends AppCompatActivity {
 
@@ -28,13 +49,15 @@ public class PostDetail extends AppCompatActivity {
     EditText editTextComment;
     Button btnAddComment;
     String PostKey;
-    FirebaseAuth firebaseAuth;
+    FirebaseAuth mAuth;
     FirebaseUser firebaseUser;
     FirebaseDatabase firebaseDatabase;
+    FirebaseFirestore fStore;
+    CollectionReference collectionReferenceComments;
+    CollectionReference collectionReferenceUsers;
     RecyclerView RvComment;
-    //CommentAdapter commentAdapter;
-    //List<Comment> listComment;
-    static String COMMENT_KEY = "Comment";
+    CommentAdapter commentAdapter;
+    List<Comment> commentList;
 
 
     @Override
@@ -42,16 +65,11 @@ public class PostDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
 
-
-        // let's set the statue bar to transparent
-        //Window w = getWindow();
-        //w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        //getSupportActionBar().hide();
-
         // ini Views
         RvComment = findViewById(R.id.rv_comment);
         imgPost = findViewById(R.id.post_detail_img);
         imgUserPost = findViewById(R.id.post_detail_user_img);
+        imgCurrentUser = findViewById(R.id.post_detail_currentuser_img);
 
         txtPostTitle = findViewById(R.id.post_detail_title);
         txtPostDesc = findViewById(R.id.post_detail_desc);
@@ -61,9 +79,21 @@ public class PostDetail extends AppCompatActivity {
         btnAddComment = findViewById(R.id.post_detail_add_comment_btn);
 
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
+        mAuth = FirebaseAuth.getInstance();
+        firebaseUser = mAuth.getCurrentUser();
         firebaseDatabase = FirebaseDatabase.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+        collectionReferenceComments = fStore.collection("Comments");
+        collectionReferenceUsers = fStore.collection("Users");
+
+        //Make a comment
+
+        btnAddComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendComment();
+            }
+        });
 
 
         String postImage = getIntent().getExtras().getString("image");
@@ -81,6 +111,89 @@ public class PostDetail extends AppCompatActivity {
         String txtDate = dateToString((Timestamp) getIntent().getExtras().get("timestamp"));
         String txtName = getIntent().getExtras().getString("name");
         txtPostDateName.setText(txtDate + " | " + txtName);
+
+        // setcomment user image
+        DocumentReference docRef = fStore.collection("Users").document(mAuth.getCurrentUser().getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                        Glide.with(getApplicationContext())
+                                .load(document.getString("image").toString())
+                                .into(imgCurrentUser);
+                }
+            }
+        });
+        // get post id
+        PostKey = getIntent().getExtras().getString("postkey");
+
+
+        // ini Recyclerview Comment
+        commentList = new ArrayList<>();
+        commentAdapter = new CommentAdapter(this, commentList);
+        RvComment.setAdapter(commentAdapter);
+        loadComments();
+
+    }
+
+    private void sendComment() {
+        final String content = editTextComment.getText().toString();
+        final String useruid = mAuth.getCurrentUser().getUid();
+        final String postkey = getIntent().getExtras().getString("postkey");
+        Object myTimestamp = FieldValue.serverTimestamp();
+        if (content.isEmpty()) {
+            Toast.makeText(PostDetail.this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
+        } else {
+            SaveComment(content, useruid, myTimestamp, postkey);
+        }
+    }
+
+    private void SaveComment(String content, String useruid, Object myTimestamp, String postkey) {
+        HashMap<String, Object> comment = new HashMap();
+        comment.put("content", content);
+        comment.put("useruid", useruid);
+        comment.put("timestamp", myTimestamp);
+        comment.put("postkey", postkey);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Comment").push();
+        String key = myRef.getKey();
+
+        DocumentReference documentReference = fStore.collection("Comments").document(key);
+        documentReference.set(comment);
+
+        Toast.makeText(PostDetail.this, "Comentario creado", Toast.LENGTH_SHORT).show();
+        commentAdapter.notifyDataSetChanged();
+    }
+
+    private void loadComments() {
+        RvComment.setLayoutManager(new LinearLayoutManager(this));
+
+        Query commentQuery = collectionReferenceComments
+                .whereEqualTo("postkey", getIntent().getExtras().getString("postkey"))
+                .orderBy("timestamp", Query.Direction.DESCENDING);
+        commentQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Comment comment = new Comment();
+                    comment.setContent(document.getString("content"));
+                    comment.setTimestamp(document.get("timestamp"));
+                    String commenterUid = document.getString("useruid");
+                    DocumentReference userRef = collectionReferenceUsers.document(commenterUid);
+                    userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            comment.setName(documentSnapshot.getString("name"));
+                            comment.setAvatar(documentSnapshot.getString("image"));
+                            commentList.add(comment);
+                            commentAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            }
+        });
 
     }
 
