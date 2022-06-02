@@ -115,6 +115,7 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
                         = new Intent(NavigationDrawer.this,
                         CreatePost.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -144,11 +145,11 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
             case R.id.nav_home:
                 ft.replace(R.id.content, new HomeFragment()).commit();
                 break;
-            case R.id.nav_md:
-                ft.replace(R.id.content, new DirectFragment()).commit();
-                break;
             case R.id.nav_profile:
                 ft.replace(R.id.content, new ProfileFragment()).commit();
+                break;
+            case R.id.nav_md:
+                ft.replace(R.id.content, new DirectFragment()).commit();
                 break;
             case R.id.nav_board:
                 ft.replace(R.id.content, new BoardFragment()).commit();

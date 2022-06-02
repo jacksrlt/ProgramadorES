@@ -1,8 +1,10 @@
 package com.ja.programadores.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -23,6 +26,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.ja.programadores.Adapters.PostAdapter;
 import com.ja.programadores.Constructors.Post;
+import com.ja.programadores.CreatePost;
+import com.ja.programadores.EditProfile;
 import com.ja.programadores.R;
 
 import java.util.ArrayList;
@@ -36,6 +41,7 @@ public class HomeFragment extends Fragment {
     CollectionReference collectionReferencePosts;
     CollectionReference collectionReferenceUsers;
     List<Post> postList;
+    FloatingActionButton fab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +59,22 @@ public class HomeFragment extends Fragment {
         loadPosts();
 
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_add));
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent
+                        = new Intent(getContext(),
+                        CreatePost.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void loadPosts() {
