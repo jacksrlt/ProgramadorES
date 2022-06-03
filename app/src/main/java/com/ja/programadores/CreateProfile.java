@@ -56,10 +56,10 @@ public class CreateProfile extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         storageProfilePicRef = FirebaseStorage.getInstance().getReference().child("users_photos");
 
-        nameEt = findViewById(R.id.nameEt);
+        nameEt = findViewById(R.id.nameTv);
         bioEt = findViewById(R.id.descEt);
         linkedinEt = findViewById(R.id.webEt);
-        githubEt = findViewById(R.id.githubEt);
+        githubEt = findViewById(R.id.githubTv);
         progressBar = findViewById(R.id.progressBar);
 
         progressBar.setVisibility(View.INVISIBLE);
@@ -126,6 +126,7 @@ public class CreateProfile extends AppCompatActivity {
                     userMap.put("linkedin", linkedin);
                     userMap.put("github", github);
                     userMap.put("first", false);
+                    userMap.put("op", false);
 
                     String userUID = mAuth.getCurrentUser().getUid();
                     DocumentReference documentReference = fStore.collection("Users").document(userUID);

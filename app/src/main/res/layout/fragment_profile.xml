@@ -18,7 +18,7 @@
         android:src="@drawable/picplaceholder" />
 
     <TextView
-        android:id="@+id/nameEt"
+        android:id="@+id/nameTv"
         app:layout_constraintEnd_toEndOf="@id/guideline3"
         app:layout_constraintStart_toStartOf="@id/guideline2"
         android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/profileIv" />
 
     <TextView
-        android:id="@+id/descEt"
+        android:id="@+id/bioTv"
         app:layout_constraintEnd_toEndOf="@id/guideline3"
         app:layout_constraintStart_toStartOf="@id/guideline2"
         android:layout_width="wrap_content"
@@ -42,31 +42,31 @@
         android:textAlignment="center"
         android:padding="4dp"
         android:textSize="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/nameEt" />
+        app:layout_constraintTop_toBottomOf="@+id/nameTv" />
 
     <TextView
         app:layout_constraintEnd_toEndOf="@id/guideline3"
         app:layout_constraintStart_toStartOf="@id/guideline2"
         android:drawableLeft="@drawable/ic_github"
         android:drawablePadding="4dp"
-        android:id="@+id/githubEt"
+        android:id="@+id/githubTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="54dp"
         android:text="Usuario de GitHub"
-        app:layout_constraintTop_toBottomOf="@+id/descEt" />
+        app:layout_constraintTop_toBottomOf="@+id/bioTv" />
 
     <TextView
         app:layout_constraintEnd_toEndOf="@id/guideline3"
         app:layout_constraintStart_toStartOf="@id/guideline2"
         android:drawableLeft="@drawable/ic_linkedin"
         android:drawablePadding="4dp"
-        android:id="@+id/webEt"
+        android:id="@+id/linkedinTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         android:text="Usuario de LinkedIn"
-        app:layout_constraintTop_toBottomOf="@+id/githubEt" />
+        app:layout_constraintTop_toBottomOf="@+id/githubTv" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"

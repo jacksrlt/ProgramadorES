@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -38,9 +39,11 @@ public class HomeFragment extends Fragment {
     RecyclerView postRecyclerView;
     PostAdapter postAdapter;
     FirebaseFirestore firebaseFirestore;
+    FirebaseAuth mAuth;
     CollectionReference collectionReferencePosts;
     CollectionReference collectionReferenceUsers;
     List<Post> postList;
+    String currentUser;
     FloatingActionButton fab;
 
     @Override
@@ -51,6 +54,8 @@ public class HomeFragment extends Fragment {
         postRecyclerView = view.findViewById(R.id.postList);
         postRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         firebaseFirestore = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getUid();
         collectionReferencePosts = firebaseFirestore.collection("Posts");
         collectionReferenceUsers = firebaseFirestore.collection("Users");
         postList = new ArrayList<>();
@@ -64,15 +69,30 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_add));
-        fab.setOnClickListener(new View.OnClickListener() {
+
+        DocumentReference userType = collectionReferenceUsers.document(currentUser);
+        userType.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onClick(View view) {
-                Intent intent
-                        = new Intent(getContext(),
-                        CreatePost.class);
-                startActivity(intent);
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.getBoolean("op") != true) {
+                    fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+                    fab.setVisibility(View.VISIBLE);
+                    fab.setClickable(true);
+                    fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_add));
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent
+                                    = new Intent(getContext(),
+                                    CreatePost.class);
+                            startActivity(intent);
+                        }
+                    });
+                } else {
+                    fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+                    fab.setVisibility(View.INVISIBLE);
+                    fab.setClickable(false);
+                }
             }
         });
     }

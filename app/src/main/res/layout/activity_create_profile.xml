@@ -35,11 +35,11 @@
         android:layout_marginBottom="26dp"
         android:text="¿Cuál es tu nombre?"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/nameEt"
-        app:layout_constraintStart_toStartOf="@+id/nameEt" />
+        app:layout_constraintBottom_toTopOf="@+id/nameTv"
+        app:layout_constraintStart_toStartOf="@+id/nameTv" />
 
     <EditText
-        android:id="@+id/nameEt"
+        android:id="@+id/nameTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -59,7 +59,7 @@
         android:layout_marginBottom="15dp"
         android:text="Algo sobre ti"
         app:layout_constraintBottom_toTopOf="@+id/descEt"
-        app:layout_constraintEnd_toEndOf="@+id/nameEt"
+        app:layout_constraintEnd_toEndOf="@+id/nameTv"
         app:layout_constraintStart_toStartOf="@+id/avatarText" />
 
     <EditText
@@ -99,12 +99,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:text="GitHub"
-        app:layout_constraintBottom_toTopOf="@+id/githubEt"
+        app:layout_constraintBottom_toTopOf="@+id/githubTv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/githubEt"
+        android:id="@+id/githubTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="34dp"

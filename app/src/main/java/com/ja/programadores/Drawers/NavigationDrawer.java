@@ -93,24 +93,6 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
-        if (op = true) {
-            fab.setClickable(false);
-            fab.setEnabled(false);
-            fab.setVisibility(View.GONE);
-        }
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent
-                        = new Intent(NavigationDrawer.this,
-                        CreatePost.class);
-                startActivity(intent);
-                finish();
-            }
-        });
     }
 
     @Override

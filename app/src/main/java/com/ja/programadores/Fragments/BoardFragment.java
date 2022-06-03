@@ -1,26 +1,133 @@
 package com.ja.programadores.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.ja.programadores.Adapters.BoardAdapter;
+import com.ja.programadores.Adapters.PostAdapter;
+import com.ja.programadores.Constructors.Board;
+import com.ja.programadores.Constructors.Post;
+import com.ja.programadores.CreateBoard;
+import com.ja.programadores.CreatePost;
+import com.ja.programadores.EditProfile;
 import com.ja.programadores.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BoardFragment extends Fragment {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    RecyclerView boardRecyclerView;
+    BoardAdapter boardAdapter;
+    FirebaseFirestore firebaseFirestore;
+    FirebaseAuth mAuth;
+    CollectionReference collectionReferenceBoards;
+    CollectionReference collectionReferenceUsers;
+    List<Board> boardList;
+    String currentUser;
+    FloatingActionButton fab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_board, container, false);
+        View view = inflater.inflate(R.layout.fragment_board, container, false);
+
+        boardRecyclerView = view.findViewById(R.id.boardList);
+        boardRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getUid();
+        collectionReferenceBoards = firebaseFirestore.collection("Boards");
+        collectionReferenceUsers = firebaseFirestore.collection("Users");
+        boardList = new ArrayList<>();
+        boardAdapter = new BoardAdapter(getActivity(), boardList);
+        boardRecyclerView.setAdapter(boardAdapter);
+        loadPosts();
+
+        return view;
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        DocumentReference userType = collectionReferenceUsers.document(currentUser);
+        userType.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.getBoolean("op") == true) {
+                    fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+                    fab.setVisibility(View.VISIBLE);
+                    fab.setClickable(true);
+                    fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_add));
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent
+                                    = new Intent(getContext(),
+                                    CreateBoard.class);
+                            startActivity(intent);
+                        }
+                    });
+                } else {
+                    fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+                    fab.setVisibility(View.INVISIBLE);
+                    fab.setClickable(false);
+                }
+            }
+        });
+    }
+
+    private void loadPosts() {
+
+        Query postQuery = collectionReferenceBoards.orderBy("timestamp", Query.Direction.DESCENDING);
+        postQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Board board = new Board();
+                    board.setTitle(document.getString("title"));
+                    board.setContent(document.getString("content"));
+                    board.setPostKey(document.getId());
+                    board.setLocation(document.getString("location"));
+                    board.setTimestamp(document.get("timestamp"));
+                    String posterUid = document.getString("useruid");
+                    DocumentReference userRef = collectionReferenceUsers.document(posterUid);
+                    userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            board.setName(documentSnapshot.getString("name"));
+                            board.setAvatar(documentSnapshot.getString("image"));
+                            boardList.add(board);
+                            boardAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+
 }

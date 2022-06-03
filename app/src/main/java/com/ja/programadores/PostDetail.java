@@ -86,6 +86,10 @@ public class PostDetail extends AppCompatActivity {
         collectionReferenceComments = fStore.collection("Comments");
         collectionReferenceUsers = fStore.collection("Users");
 
+        //Hide comment
+
+        userType();
+
         //Make a comment
 
         btnAddComment.setOnClickListener(new View.OnClickListener() {
@@ -119,12 +123,13 @@ public class PostDetail extends AppCompatActivity {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                        Glide.with(getApplicationContext())
-                                .load(document.getString("image").toString())
-                                .into(imgCurrentUser);
+                    Glide.with(getApplicationContext())
+                            .load(document.getString("image").toString())
+                            .into(imgCurrentUser);
                 }
             }
         });
+
         // get post id
         PostKey = getIntent().getExtras().getString("postkey");
 
@@ -135,6 +140,23 @@ public class PostDetail extends AppCompatActivity {
         RvComment.setAdapter(commentAdapter);
         loadComments();
 
+    }
+
+    private void userType() {
+        DocumentReference docRef = fStore.collection("Users").document(mAuth.getCurrentUser().getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.getBoolean("op") == true) {
+                        imgCurrentUser.setVisibility(View.GONE);
+                        editTextComment.setVisibility(View.GONE);
+                        btnAddComment.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
     }
 
     private void sendComment() {

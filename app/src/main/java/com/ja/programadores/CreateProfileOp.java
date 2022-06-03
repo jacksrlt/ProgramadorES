@@ -56,7 +56,7 @@ public class CreateProfileOp extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         storageProfilePicRef = FirebaseStorage.getInstance().getReference().child("users_photos");
 
-        nameEt = findViewById(R.id.nameEt);
+        nameEt = findViewById(R.id.nameTv);
         descEt = findViewById(R.id.descEt);
         webEt = findViewById(R.id.webEt);
         progressBar = findViewById(R.id.progressBar);
@@ -123,6 +123,7 @@ public class CreateProfileOp extends AppCompatActivity {
                     userMap.put("desc", desc);
                     userMap.put("web", web);
                     userMap.put("first", false);
+                    userMap.put("op", true);
 
                     String userUID = mAuth.getCurrentUser().getUid();
                     DocumentReference documentReference = fStore.collection("Users").document(userUID);

@@ -1,66 +1,104 @@
 package com.ja.programadores.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.ja.programadores.EditProfile;
+import com.ja.programadores.EditProfileOp;
 import com.ja.programadores.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragmentOp#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ProfileFragmentOp extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public ProfileFragmentOp() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileFragmentOp.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ProfileFragmentOp newInstance(String param1, String param2) {
-        ProfileFragmentOp fragment = new ProfileFragmentOp();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    ImageView profileIv;
+    TextView nameTv;
+    TextView descTv;
+    TextView webTv;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore fStore;
+    FloatingActionButton fab;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_op, container, false);
+        //User Data
+        View view = inflater.inflate(R.layout.fragment_profile_op, container, false);
+        mAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+        profileIv = view.findViewById(R.id.profileIv);
+        nameTv = view.findViewById(R.id.nameTv);
+        descTv = view.findViewById(R.id.descTv);
+        webTv = view.findViewById(R.id.webTv);
+        showProfile();
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_edit));
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent
+                        = new Intent(getContext(),
+                        EditProfileOp.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void showProfile() {
+        DocumentReference docRef = fStore.collection("Users").document(mAuth.getCurrentUser().getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        nameTv.setText(document.getString("name").toString());
+                        descTv.setText(document.getString("desc").toString());
+                        webTv.setText(document.getString("web").toString());
+                        if (!document.contains("image")) {
+                            Glide.with(getContext())
+                                    .load("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541\"")
+                                    .into(profileIv);
+                        } else {
+                            Glide.with(getContext())
+                                    .load(document.getString("image").toString())
+                                    .into(profileIv);
+                        }
+                    }
+                } else {
+                    nameTv.setText("ERROR");
+                    Glide.with(getContext())
+                            .load("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541\"")
+                            .into(profileIv);
+                }
+            }
+        });
     }
 }

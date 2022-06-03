@@ -13,18 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.Timestamp;
-import com.ja.programadores.Constructors.Post;
+import com.ja.programadores.BoardDetail;
+import com.ja.programadores.Constructors.Board;
 import com.ja.programadores.PostDetail;
 import com.ja.programadores.R;
 
 import java.util.List;
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> {
+public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.MyViewHolder> {
 
     Context mContext;
-    List<Post> mData;
+    List<Board> mData;
 
-    public PostAdapter(Context mContext, List<Post> mData) {
+    public BoardAdapter(Context mContext, List<Board> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -33,7 +34,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View row = LayoutInflater.from(mContext).inflate(R.layout.post_layout, parent, false);
+        View row = LayoutInflater.from(mContext).inflate(R.layout.board_layout, parent, false);
 
         return new MyViewHolder(row);
     }
@@ -42,7 +43,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         holder.tvTitle.setText(mData.get(position).getTitle());
-        Glide.with(mContext).load(mData.get(position).getImage()).into(holder.imgPost);
         Glide.with(mContext).load(mData.get(position).getAvatar()).into(holder.imgPostProfile);
 
     }
@@ -55,31 +55,29 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvTitle;
-        ImageView imgPost;
         ImageView imgPostProfile;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.row_post_title);
-            imgPost = itemView.findViewById(R.id.row_post_img);
             imgPostProfile = itemView.findViewById(R.id.row_post_profile_img);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent postDetail = new Intent(mContext,PostDetail.class);
+                    Intent boardDetail = new Intent(mContext, BoardDetail.class);
                     int position = getAdapterPosition();
 
-                    postDetail.putExtra("title",mData.get(position).getTitle());
-                    postDetail.putExtra("image",mData.get(position).getImage());
-                    postDetail.putExtra("content",mData.get(position).getContent());
-                    postDetail.putExtra("postkey",mData.get(position).getPostKey());
-                    postDetail.putExtra("avatar",mData.get(position).getAvatar());
-                    postDetail.putExtra("name",mData.get(position).getName());
+                    boardDetail.putExtra("title",mData.get(position).getTitle());
+                    boardDetail.putExtra("content",mData.get(position).getContent());
+                    boardDetail.putExtra("location",mData.get(position).getLocation());
+                    boardDetail.putExtra("postkey",mData.get(position).getPostKey());
+                    boardDetail.putExtra("avatar",mData.get(position).getAvatar());
+                    boardDetail.putExtra("name",mData.get(position).getName());
                     Timestamp timestamp  = (Timestamp) mData.get(position).getTimestamp();
-                    postDetail.putExtra("timestamp",timestamp) ;
-                    mContext.startActivity(postDetail);
+                    boardDetail.putExtra("timestamp",timestamp) ;
+                    mContext.startActivity(boardDetail);
 
                 }
             });

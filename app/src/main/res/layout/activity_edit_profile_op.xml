@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditProfile">
+    tools:context=".EditProfileOp">
 
     <ImageView
         android:id="@+id/profileIv"
@@ -18,13 +18,13 @@
         android:src="@drawable/picplaceholder" />
 
     <EditText
-        android:id="@+id/nameTv"
+        android:id="@+id/nameEt"
         app:layout_constraintEnd_toEndOf="@id/guideline3"
         app:layout_constraintStart_toStartOf="@id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Nombre de Usuario"
+        android:text="Nombre de Empresa"
         android:textAlignment="center"
         android:padding="4dp"
         android:textSize="24dp"
@@ -32,41 +32,29 @@
         app:layout_constraintTop_toBottomOf="@+id/profileIv" />
 
     <EditText
-        android:id="@+id/bioEt"
+        android:id="@+id/descEt"
         app:layout_constraintEnd_toEndOf="@id/guideline3"
         app:layout_constraintStart_toStartOf="@id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Biografía de Usuario"
+        android:text="Descripcion"
         android:textAlignment="center"
         android:padding="4dp"
         android:textSize="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/nameTv" />
+        app:layout_constraintTop_toBottomOf="@+id/nameEt" />
 
     <EditText
         app:layout_constraintEnd_toEndOf="@id/guideline3"
         app:layout_constraintStart_toStartOf="@id/guideline2"
-        android:drawableLeft="@drawable/ic_github"
         android:drawablePadding="4dp"
-        android:id="@+id/githubEt"
+        android:id="@+id/webEt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="54dp"
-        android:text="Usuario de GitHub"
-        app:layout_constraintTop_toBottomOf="@+id/bioEt" />
+        android:text="Sitio Web"
+        app:layout_constraintTop_toBottomOf="@+id/descEt" />
 
-    <EditText
-        app:layout_constraintEnd_toEndOf="@id/guideline3"
-        app:layout_constraintStart_toStartOf="@id/guideline2"
-        android:drawableLeft="@drawable/ic_linkedin"
-        android:drawablePadding="4dp"
-        android:id="@+id/linkedinEt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:text="Usuario de LinkedIn"
-        app:layout_constraintTop_toBottomOf="@+id/githubEt" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -90,6 +78,6 @@
         android:text="Guardar"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/linkedinEt" />
+        app:layout_constraintTop_toBottomOf="@+id/webEt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

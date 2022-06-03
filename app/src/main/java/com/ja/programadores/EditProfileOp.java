@@ -36,7 +36,7 @@ import com.ja.programadores.Drawers.NavigationDrawer;
 
 import java.util.HashMap;
 
-public class EditProfile extends AppCompatActivity {
+public class EditProfileOp extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     FirebaseFirestore fStore;
@@ -46,7 +46,7 @@ public class EditProfile extends AppCompatActivity {
     static int PReqCode = 1;
     static int REQUESCODE = 1;
     Uri pickedImgUri;
-    private EditText nameEt, bioEt, linkedinEt, githubEt;
+    private EditText nameEt, descEt, webEt;
     Button saveBt;
     private ProgressBar progressBar;
 
@@ -60,9 +60,8 @@ public class EditProfile extends AppCompatActivity {
         storageProfilePicRef = FirebaseStorage.getInstance().getReference().child("users_photos");
 
         nameEt = findViewById(R.id.nameTv);
-        bioEt = findViewById(R.id.bioEt);
-        linkedinEt = findViewById(R.id.linkedinEt);
-        githubEt = findViewById(R.id.githubEt);
+        descEt = findViewById(R.id.descEt);
+        webEt = findViewById(R.id.webEt);
         progressBar = findViewById(R.id.progressBar);
         saveBt = findViewById(R.id.saveBt);
 
@@ -88,10 +87,9 @@ public class EditProfile extends AppCompatActivity {
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
                 final String name = nameEt.getText().toString();
-                final String bio = bioEt.getText().toString();
-                final String linkedin = linkedinEt.getText().toString();
-                final String github = githubEt.getText().toString();
-                SaveProfile(name, bio, linkedin, github, pickedImgUri, mAuth.getCurrentUser());
+                final String desc = descEt.getText().toString();
+                final String web = webEt.getText().toString();
+                SaveProfile(name, desc, web, pickedImgUri, mAuth.getCurrentUser());
 
             }
         });
@@ -106,9 +104,8 @@ public class EditProfile extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     nameEt.setText(document.getString("name"));
-                    bioEt.setText(document.getString("bio"));
-                    linkedinEt.setText(document.getString("linkedin"));
-                    githubEt.setText(document.getString("github"));
+                    descEt.setText(document.getString("desc"));
+                    webEt.setText(document.getString("web"));
                     Glide.with(getApplicationContext())
                             .load(document.getString("image"))
                             .into(profileIv);
@@ -117,7 +114,7 @@ public class EditProfile extends AppCompatActivity {
         });
     }
 
-    private void SaveProfile(String name, String bio, String linkedin, String github, Uri pickedImgUri, FirebaseUser currentUser) {
+    private void SaveProfile(String name, String desc, String web, Uri pickedImgUri, FirebaseUser currentUser) {
 
         HashMap<String, Object> profileUpdate = new HashMap();
 
@@ -144,19 +141,18 @@ public class EditProfile extends AppCompatActivity {
                         HashMap<String, Object> updateProfile = new HashMap();
                         updateProfile.put("image", myUri);
                         updateProfile.put("name", name);
-                        updateProfile.put("linkedin", linkedin);
-                        updateProfile.put("github", github);
-                        updateProfile.put("bio", bio);
+                        updateProfile.put("web", web);
+                        updateProfile.put("desc", desc);
                         updateProfile.put("first", false);
-                        updateProfile.put("op", false);
+                        updateProfile.put("op", true);
 
                         DocumentReference documentReference = fStore.collection("Users").document(currentUser.getUid());
                         documentReference.set(updateProfile);
 
-                        Toast.makeText(EditProfile.this, "Perfil actualizado", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditProfileOp.this, "Perfil actualizado", Toast.LENGTH_SHORT).show();
 
                         Intent intent
-                                = new Intent(EditProfile.this,
+                                = new Intent(EditProfileOp.this,
                                 NavigationDrawer.class);
                         startActivity(intent);
                         finish();
@@ -173,20 +169,19 @@ public class EditProfile extends AppCompatActivity {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     updateProfile.put("name", name);
-                    updateProfile.put("linkedin", linkedin);
-                    updateProfile.put("github", github);
-                    updateProfile.put("bio", bio);
+                    updateProfile.put("web", web);
+                    updateProfile.put("desc", desc);
                     updateProfile.put("first", false);
-                    updateProfile.put("op", false);
+                    updateProfile.put("op", true);
                     updateProfile.put("image", documentSnapshot.getString("image"));
                     documentReference.set(updateProfile);
                 }
             });
 
-            Toast.makeText(EditProfile.this, "Perfil actualizado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditProfileOp.this, "Perfil actualizado", Toast.LENGTH_SHORT).show();
 
             Intent intent
-                    = new Intent(EditProfile.this,
+                    = new Intent(EditProfileOp.this,
                     NavigationDrawer.class);
             startActivity(intent);
             finish();
@@ -197,12 +192,12 @@ public class EditProfile extends AppCompatActivity {
     }
 
     private void checkAndRequestForPermission() {
-        if (ContextCompat.checkSelfPermission(EditProfile.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (ContextCompat.checkSelfPermission(EditProfileOp.this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(EditProfile.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                Toast.makeText(EditProfile.this, "Debe aceptar los permisos", Toast.LENGTH_SHORT).show();
+            if (ActivityCompat.shouldShowRequestPermissionRationale(EditProfileOp.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                Toast.makeText(EditProfileOp.this, "Debe aceptar los permisos", Toast.LENGTH_SHORT).show();
             } else {
-                ActivityCompat.requestPermissions(EditProfile.this,
+                ActivityCompat.requestPermissions(EditProfileOp.this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PReqCode);
             }
         } else {

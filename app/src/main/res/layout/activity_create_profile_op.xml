@@ -38,12 +38,12 @@
         android:layout_marginBottom="26dp"
         android:text="Nombre de la empresa"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/nameEt"
+        app:layout_constraintBottom_toTopOf="@+id/nameTv"
         app:layout_constraintStart_toStartOf="@+id/profileIv"
         app:layout_constraintTop_toBottomOf="@+id/profileIv" />
 
     <EditText
-        android:id="@+id/nameEt"
+        android:id="@+id/nameTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -64,9 +64,9 @@
         android:layout_marginBottom="16dp"
         android:text="Descripción"
         app:layout_constraintBottom_toTopOf="@+id/descEt"
-        app:layout_constraintEnd_toEndOf="@+id/nameEt"
+        app:layout_constraintEnd_toEndOf="@+id/nameTv"
         app:layout_constraintStart_toStartOf="@+id/avatarText"
-        app:layout_constraintTop_toBottomOf="@+id/nameEt" />
+        app:layout_constraintTop_toBottomOf="@+id/nameTv" />
 
     <EditText
         android:id="@+id/descEt"

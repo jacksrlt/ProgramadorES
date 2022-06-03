@@ -16,6 +16,15 @@
         android:theme="@style/Theme.ProgramadorES"
         tools:targetApi="31">
         <activity
+            android:name=".CreateBoard"
+            android:exported="false" />
+        <activity
+            android:name=".BoardDetail"
+            android:exported="false" />
+        <activity
+            android:name=".EditProfileOp"
+            android:exported="false" />
+        <activity
             android:name=".CreateProfileOp"
             android:exported="false" />
         <activity
