@@ -48,12 +48,11 @@ public class EditProfile extends AppCompatActivity {
     Uri pickedImgUri;
     private EditText nameEt, bioEt, linkedinEt, githubEt;
     Button saveBt;
-    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_profile);
+        setContentView(R.layout.activity_edit_profile);
 
         mAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -63,10 +62,7 @@ public class EditProfile extends AppCompatActivity {
         bioEt = findViewById(R.id.bioEt);
         linkedinEt = findViewById(R.id.linkedinEt);
         githubEt = findViewById(R.id.githubEt);
-        progressBar = findViewById(R.id.progressBar);
         saveBt = findViewById(R.id.saveBt);
-
-        progressBar.setVisibility(View.INVISIBLE);
 
         profileIv = findViewById(R.id.profileIv);
         profileIv.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +82,6 @@ public class EditProfile extends AppCompatActivity {
         saveBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressBar.setVisibility(View.VISIBLE);
                 final String name = nameEt.getText().toString();
                 final String bio = bioEt.getText().toString();
                 final String linkedin = linkedinEt.getText().toString();

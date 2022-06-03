@@ -15,9 +15,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,6 +36,8 @@ public class ProfileFragmentOp extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore fStore;
     FloatingActionButton fab;
+    String currentUser;
+    CollectionReference collectionReferenceUsers;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,8 @@ public class ProfileFragmentOp extends Fragment {
         nameTv = view.findViewById(R.id.nameTv);
         descTv = view.findViewById(R.id.descTv);
         webTv = view.findViewById(R.id.webTv);
+        collectionReferenceUsers = fStore.collection("Users");
+        currentUser = mAuth.getUid();
         showProfile();
         return view;
     }
@@ -58,15 +64,37 @@ public class ProfileFragmentOp extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_edit));
-        fab.setOnClickListener(new View.OnClickListener() {
+        DocumentReference userType = collectionReferenceUsers.document(currentUser);
+        userType.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onClick(View view) {
-                Intent intent
-                        = new Intent(getContext(),
-                        EditProfileOp.class);
-                startActivity(intent);
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.getBoolean("op") == true) {
+                    fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+                    fab.setVisibility(View.VISIBLE);
+                    fab.setClickable(true);
+                    fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_edit));
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent
+                                    = new Intent(getContext(),
+                                    EditProfileOp.class);
+                            startActivity(intent);
+                        }
+                    });
+                } else {
+                    fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+                    fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_edit));
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent
+                                    = new Intent(getContext(),
+                                    EditProfile.class);
+                            startActivity(intent);
+                        }
+                    });
+                }
             }
         });
     }

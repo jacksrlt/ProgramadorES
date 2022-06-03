@@ -48,24 +48,20 @@ public class EditProfileOp extends AppCompatActivity {
     Uri pickedImgUri;
     private EditText nameEt, descEt, webEt;
     Button saveBt;
-    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_profile);
+        setContentView(R.layout.activity_edit_profile_op);
 
         mAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         storageProfilePicRef = FirebaseStorage.getInstance().getReference().child("users_photos");
 
-        nameEt = findViewById(R.id.nameTv);
+        nameEt = findViewById(R.id.nameEt);
         descEt = findViewById(R.id.descEt);
         webEt = findViewById(R.id.webEt);
-        progressBar = findViewById(R.id.progressBar);
         saveBt = findViewById(R.id.saveBt);
-
-        progressBar.setVisibility(View.INVISIBLE);
 
         profileIv = findViewById(R.id.profileIv);
         profileIv.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +81,6 @@ public class EditProfileOp extends AppCompatActivity {
         saveBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressBar.setVisibility(View.VISIBLE);
                 final String name = nameEt.getText().toString();
                 final String desc = descEt.getText().toString();
                 final String web = webEt.getText().toString();
