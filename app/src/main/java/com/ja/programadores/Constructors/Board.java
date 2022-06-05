@@ -4,7 +4,7 @@ import com.google.firebase.database.ServerValue;
 
 public class Board {
 
-    private String postKey;
+    private String boardkey;
     private String title;
     private String content;
     private String name;
@@ -36,12 +36,10 @@ public class Board {
 
     public void setAvatar(String avatar) {this.avatar = avatar;}
 
-    public String getPostKey() {
-        return postKey;
-    }
+    public String getBoardkey() {return boardkey;}
 
-    public void setPostKey(String postKey) {
-        this.postKey = postKey;
+    public void setBoardkey(String boardkey) {
+        this.boardkey = boardkey;
     }
 
     public String getTitle() {

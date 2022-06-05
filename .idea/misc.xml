@@ -19,11 +19,13 @@
         <entry key="..\:/Documentos/Clases/ProgramadorES/app/src/main/res/layout/activity_create_post.xml" value="0.22" />
         <entry key="..\:/Documentos/Clases/ProgramadorES/app/src/main/res/layout/activity_create_profile.xml" value="0.16666666666666666" />
         <entry key="..\:/Documentos/Clases/ProgramadorES/app/src/main/res/layout/activity_create_profile_op.xml" value="0.1796875" />
+        <entry key="..\:/Documentos/Clases/ProgramadorES/app/src/main/res/layout/activity_direct_detail.xml" value="0.1796875" />
         <entry key="..\:/Documentos/Clases/ProgramadorES/app/src/main/res/layout/activity_edit_profile.xml" value="0.1796875" />
         <entry key="..\:/Documentos/Clases/ProgramadorES/app/src/main/res/layout/activity_edit_profile_op.xml" value="0.1796875" />
         <entry key="..\:/Documentos/Clases/ProgramadorES/app/src/main/res/layout/activity_login.xml" value="0.16666666666666666" />
         <entry key="..\:/Documentos/Clases/ProgramadorES/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Documentos/Clases/ProgramadorES/app/src/main/res/layout/activity_navigation.xml" value="0.1" />
+        <entry key="..\:/Documentos/Clases/ProgramadorES/app/src/main/res/layout/activity_new_direct.xml" value="0.1796875" />
         <entry key="..\:/Documentos/Clases/ProgramadorES/app/src/main/res/layout/activity_op_navigation_drawer.xml" value="0.1331521739130435" />
         <entry key="..\:/Documentos/Clases/ProgramadorES/app/src/main/res/layout/activity_post_detail.xml" value="0.1796875" />
         <entry key="..\:/Documentos/Clases/ProgramadorES/app/src/main/res/layout/activity_register.xml" value="0.1796875" />
@@ -32,6 +34,7 @@
         <entry key="..\:/Documentos/Clases/ProgramadorES/app/src/main/res/layout/board_layout.xml" value="0.14743589743589744" />
         <entry key="..\:/Documentos/Clases/ProgramadorES/app/src/main/res/layout/board_post.xml" value="0.14764492753623187" />
         <entry key="..\:/Documentos/Clases/ProgramadorES/app/src/main/res/layout/comment_layout.xml" value="0.1796875" />
+        <entry key="..\:/Documentos/Clases/ProgramadorES/app/src/main/res/layout/direct_layout.xml" value="0.1796875" />
         <entry key="..\:/Documentos/Clases/ProgramadorES/app/src/main/res/layout/fragment_board.xml" value="0.10144927536231885" />
         <entry key="..\:/Documentos/Clases/ProgramadorES/app/src/main/res/layout/fragment_chat.xml" value="0.1796875" />
         <entry key="..\:/Documentos/Clases/ProgramadorES/app/src/main/res/layout/fragment_direct.xml" value="0.1796875" />

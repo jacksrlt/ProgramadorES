@@ -72,7 +72,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.MyViewHolder
                     boardDetail.putExtra("title",mData.get(position).getTitle());
                     boardDetail.putExtra("content",mData.get(position).getContent());
                     boardDetail.putExtra("location",mData.get(position).getLocation());
-                    boardDetail.putExtra("postkey",mData.get(position).getPostKey());
+                    boardDetail.putExtra("boardkey",mData.get(position).getBoardkey());
                     boardDetail.putExtra("avatar",mData.get(position).getAvatar());
                     boardDetail.putExtra("name",mData.get(position).getName());
                     Timestamp timestamp  = (Timestamp) mData.get(position).getTimestamp();

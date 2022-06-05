@@ -110,7 +110,7 @@ public class BoardFragment extends Fragment {
                     Board board = new Board();
                     board.setTitle(document.getString("title"));
                     board.setContent(document.getString("content"));
-                    board.setPostKey(document.getId());
+                    board.setBoardkey(document.getId());
                     board.setLocation(document.getString("location"));
                     board.setTimestamp(document.get("timestamp"));
                     String posterUid = document.getString("useruid");

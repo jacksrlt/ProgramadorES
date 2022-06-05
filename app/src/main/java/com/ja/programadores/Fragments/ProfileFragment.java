@@ -115,21 +115,10 @@ public class ProfileFragment extends Fragment {
                         bioTv.setText(document.getString("bio").toString());
                         linkedinTv.setText(document.getString("linkedin").toString());
                         githubTv.setText(document.getString("github").toString());
-                        if (!document.contains("image")) {
-                            Glide.with(getContext())
-                                    .load("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541\"")
-                                    .into(profileIv);
-                        } else {
-                            Glide.with(getContext())
-                                    .load(document.getString("image").toString())
-                                    .into(profileIv);
-                        }
+                        Glide.with(getContext())
+                                .load(document.getString("image").toString())
+                                .into(profileIv);
                     }
-                } else {
-                    nameTv.setText("ERROR");
-                    Glide.with(getContext())
-                            .load("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541\"")
-                            .into(profileIv);
                 }
             }
         });

@@ -110,21 +110,11 @@ public class ProfileFragmentOp extends Fragment {
                         nameTv.setText(document.getString("name").toString());
                         descTv.setText(document.getString("desc").toString());
                         webTv.setText(document.getString("web").toString());
-                        if (!document.contains("image")) {
-                            Glide.with(getContext())
-                                    .load("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541\"")
-                                    .into(profileIv);
-                        } else {
-                            Glide.with(getContext())
-                                    .load(document.getString("image").toString())
-                                    .into(profileIv);
-                        }
+                        Glide.with(getContext())
+                                .load(document.getString("image").toString())
+                                .into(profileIv);
+
                     }
-                } else {
-                    nameTv.setText("ERROR");
-                    Glide.with(getContext())
-                            .load("https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541\"")
-                            .into(profileIv);
                 }
             }
         });

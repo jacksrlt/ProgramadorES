@@ -2,56 +2,40 @@ package com.ja.programadores.Constructors;
 
 import com.google.firebase.database.ServerValue;
 
-public class Post {
+public class Direct{
 
-    private String postkey;
-    private String title;
-    private String content;
+    private String subject;
+    private String message;
     private String image;
     private String name;
     private String avatar;
+    private String directkey;
     private Object timestamp;
-    private int likes;
 
-    public Post(String title, String content, String image, String name, String avatar, int likes) {
-        this.title = title;
-        this.content = content;
+    public Direct(String subject, String message, String image, String name, String avatar) {
+        this.subject = subject;
+        this.message = message;
         this.image = image;
         this.name = name;
         this.avatar = avatar;
-        this.likes = likes;
         this.timestamp = ServerValue.TIMESTAMP;
     }
 
-    public Post() {
+    public Direct() {
     }
 
-    public int getLikes() {
-        return likes;
-    }
+    public String getDirectkey() {return directkey;}
 
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
+    public void setDirectkey(String directkey) {this.directkey = directkey;}
 
     public String getAvatar() {return avatar;}
 
     public void setAvatar(String avatar) {this.avatar = avatar;}
 
-    public String getPostkey() {
-        return postkey;
-    }
+    public String getSubject() {return subject;}
 
-    public void setPostkey(String postKey) {
-        this.postkey = postkey;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContent() {
-        return content;
+    public String getMessage() {
+        return message;
     }
 
     public String getImage() {
@@ -66,12 +50,12 @@ public class Post {
         return timestamp;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public void setImage(String image) {

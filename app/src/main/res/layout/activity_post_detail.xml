@@ -105,7 +105,7 @@
         <EditText
 
             android:hint="Write Comment"
-            android:background="@color/blancogris"
+            android:background="@color/gray"
             android:id="@+id/post_detail_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:background="@color/azul"
+            android:background="@color/blue"
             android:text="Add"
             app:layout_constraintBottom_toBottomOf="@+id/post_detail_comment"
             app:layout_constraintEnd_toEndOf="parent"
