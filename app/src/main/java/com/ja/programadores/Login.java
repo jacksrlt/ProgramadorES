@@ -1,5 +1,7 @@
 package com.ja.programadores;
 
+import static android.view.View.VISIBLE;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +25,7 @@ import com.ja.programadores.Drawers.NavigationDrawer;
 
 public class Login extends AppCompatActivity {
 
+    private ProgressBar progressBar;
     private EditText emailEt, passwordEt;
     private Button loginBt;
     private Button registerBt;
@@ -42,6 +46,9 @@ public class Login extends AppCompatActivity {
         passwordEt = findViewById(R.id.passwordEt);
         loginBt = findViewById(R.id.loginBt);
         registerBt = findViewById(R.id.registerBt);
+        progressBar = findViewById(R.id.progressBar);
+
+        progressBar.setVisibility(View.INVISIBLE);
 
         //Onclick Listener para pantalla de registro
         registerBt.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +64,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loginUserAccount();
+                progressBar.setVisibility(VISIBLE);
             }
         });
 
@@ -118,6 +126,7 @@ public class Login extends AppCompatActivity {
                                                             Intent intent
                                                                     = new Intent(Login.this,
                                                                     CreateProfileOp.class);
+                                                            progressBar.setVisibility(View.INVISIBLE);
                                                             startActivity(intent);
                                                             finish();
                                                         }
@@ -126,6 +135,7 @@ public class Login extends AppCompatActivity {
                                                         Intent intent
                                                                 = new Intent(Login.this,
                                                                 NavigationDrawer.class);
+                                                        progressBar.setVisibility(View.INVISIBLE);
                                                         startActivity(intent);
                                                         finish();
                                                     }
@@ -136,6 +146,7 @@ public class Login extends AppCompatActivity {
                                 } else {
 
                                     //Inicio de sesión fallido
+                                    progressBar.setVisibility(View.INVISIBLE);
                                     Toast.makeText(getApplicationContext(),
                                                     "No se ha podido iniciar sesión",
                                                     Toast.LENGTH_LONG)

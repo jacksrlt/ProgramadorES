@@ -44,6 +44,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@color/gray"
+            android:textColor="@color/black"
             android:gravity="top|left"
             android:hint="Cuéntanos qué quieres compartir..."
             android:scrollbars="vertical" />

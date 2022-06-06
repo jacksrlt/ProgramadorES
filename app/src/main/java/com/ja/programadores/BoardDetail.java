@@ -45,7 +45,7 @@ import java.util.List;
 public class BoardDetail extends AppCompatActivity {
 
     ImageView imgUserPost;
-    TextView txtBoardDesc, txtBoardName, txtBoardTitle;
+    TextView txtBoardDesc, txtBoardName, txtBoardTitle, txtBoardLocation;
     String PostKey;
     FirebaseAuth mAuth;
     FirebaseUser firebaseUser;
@@ -64,6 +64,7 @@ public class BoardDetail extends AppCompatActivity {
         txtBoardTitle = findViewById(R.id.board_detail_title);
         txtBoardDesc = findViewById(R.id.board_detail_desc);
         txtBoardName = findViewById(R.id.board_detail_date_name);
+        txtBoardLocation = findViewById(R.id.board_detail_location);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -72,14 +73,17 @@ public class BoardDetail extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         collectionReferenceUsers = fStore.collection("Users");
 
-        String postTitle = getIntent().getExtras().getString("title");
-        txtBoardTitle.setText(postTitle);
+        String boardTitle = getIntent().getExtras().getString("title");
+        txtBoardTitle.setText(boardTitle);
+
+        String boardLocation = getIntent().getExtras().getString("location");
+        txtBoardLocation.setText(boardLocation);
 
         String userpostImage = getIntent().getExtras().getString("avatar");
         Glide.with(this).load(userpostImage).into(imgUserPost);
 
-        String postDescription = getIntent().getExtras().getString("content");
-        txtBoardDesc.setText(postDescription);
+        String boardDescription = getIntent().getExtras().getString("content");
+        txtBoardDesc.setText(boardDescription);
 
         String txtDate = dateToString((Timestamp) getIntent().getExtras().get("timestamp"));
         String txtName = getIntent().getExtras().getString("name");

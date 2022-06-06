@@ -63,10 +63,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            titleTV = itemView.findViewById(R.id.boardTitleTV);
+            titleTV = itemView.findViewById(R.id.postTitleTV);
             nameTV = itemView.findViewById(R.id.postNameTV);
             imageIV = itemView.findViewById(R.id.postImageIV);
-            avatarIV = itemView.findViewById(R.id.boardAvatarIV);
+            avatarIV = itemView.findViewById(R.id.postAvatarIV);
 
             avatarIV.setOnClickListener(new View.OnClickListener() {
                 @Override

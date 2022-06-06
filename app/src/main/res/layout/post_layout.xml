@@ -1,77 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
-    android:padding="4dp">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="7dp"
+    app:cardUseCompatPadding="true">
 
-
-    <ImageView
-        android:id="@+id/postImageIV"
-        android:layout_width="392dp"
-        android:layout_height="230dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="10dp" />
-
-    <ImageView
-        android:id="@+id/gradient"
-        android:layout_width="392dp"
-        android:layout_height="85dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/black_gradient" />
-
-    <ImageView
-        android:id="@+id/gradient2"
-        android:layout_width="392dp"
-        android:layout_height="85dp"
-        android:rotation="180"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/black_gradient" />
-
-    <TextView
-        android:id="@+id/boardTitleTV"
-        android:layout_width="192dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/postLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="46dp"
-        android:text="TextView"
-        android:textStyle="bold"
-        android:textColor="#fff"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/gradient" />
+        android:padding="5dp">
 
-    <TextView
-        android:id="@+id/postNameTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="32dp"
-        android:text="TextView"
-        android:textColor="#fff"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/boardAvatarIV"
-        app:layout_constraintTop_toTopOf="@+id/gradient2" />
+        <ImageView
+            android:id="@+id/postImageIV"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:layout_constraintBottom_toTopOf="@id/postImageIV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/postAvatarIV"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-    <ImageView
-        android:id="@+id/boardAvatarIV"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/gradient2"
-        tools:srcCompat="@tools:sample/avatars" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/postTitleTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:text="Titulo del Post"
+            android:textSize="18dp"
+            android:layout_marginBottom="8dp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/postImageIV" />
+
+        <ImageView
+            android:id="@+id/postAvatarIV"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@id/postImageIV"/>
+
+        <TextView
+            android:id="@+id/postNameTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre"
+            app:layout_constraintStart_toEndOf="@id/postAvatarIV"
+            android:layout_marginLeft="6dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="6dp"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toTopOf="@id/postImageIV"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

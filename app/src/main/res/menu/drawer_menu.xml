@@ -5,16 +5,20 @@
         <item
             android:id="@+id/nav_home"
             android:title="Home"
+            android:icon="@drawable/ic_home"
             android:checked="true"/>
         <item
             android:id="@+id/nav_md"
-            android:title="Mensajes directos"/>
+            android:title="Mensajes directos"
+            android:icon="@drawable/ic_mail"/>
         <item
             android:id="@+id/nav_profile"
-            android:title="Perfil"/>
+            android:title="Perfil"
+            android:icon="@drawable/ic_person"/>
         <item
             android:id="@+id/nav_board"
-            android:title="Oportunidades"/>
+            android:title="Oportunidades"
+            android:icon="@drawable/ic_work"/>
     </group>
 
 </menu>

@@ -42,7 +42,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.MyViewHolder
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         holder.tvTitle.setText(mData.get(position).getTitle());
-        Glide.with(mContext).load(mData.get(position).getAvatar()).into(holder.imgPostProfile);
+        holder.tvName.setText(mData.get(position).getName());
+        holder.tvLocation.setText(mData.get(position).getLocation());
+        Glide.with(mContext).load(mData.get(position).getAvatar()).circleCrop().into(holder.imgPostProfile);
 
     }
 
@@ -53,12 +55,14 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.MyViewHolder
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvTitle;
+        TextView tvTitle, tvLocation, tvName;
         ImageView imgPostProfile;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.boardTitleTV);
+            tvName = itemView.findViewById(R.id.boardNameTV);
+            tvLocation = itemView.findViewById(R.id.boardLocationTV);
             imgPostProfile = itemView.findViewById(R.id.boardAvatarIV);
 
 
@@ -68,14 +72,14 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.MyViewHolder
                     Intent boardDetail = new Intent(mContext, BoardDetail.class);
                     int position = getAdapterPosition();
 
-                    boardDetail.putExtra("title",mData.get(position).getTitle());
-                    boardDetail.putExtra("content",mData.get(position).getContent());
-                    boardDetail.putExtra("location",mData.get(position).getLocation());
-                    boardDetail.putExtra("boardkey",mData.get(position).getBoardkey());
-                    boardDetail.putExtra("avatar",mData.get(position).getAvatar());
-                    boardDetail.putExtra("name",mData.get(position).getName());
-                    Timestamp timestamp  = (Timestamp) mData.get(position).getTimestamp();
-                    boardDetail.putExtra("timestamp",timestamp) ;
+                    boardDetail.putExtra("title", mData.get(position).getTitle());
+                    boardDetail.putExtra("content", mData.get(position).getContent());
+                    boardDetail.putExtra("location", mData.get(position).getLocation());
+                    boardDetail.putExtra("boardkey", mData.get(position).getBoardkey());
+                    boardDetail.putExtra("avatar", mData.get(position).getAvatar());
+                    boardDetail.putExtra("name", mData.get(position).getName());
+                    Timestamp timestamp = (Timestamp) mData.get(position).getTimestamp();
+                    boardDetail.putExtra("timestamp", timestamp);
                     mContext.startActivity(boardDetail);
 
                 }
