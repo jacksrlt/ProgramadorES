@@ -172,6 +172,7 @@ public class PostDetail extends AppCompatActivity {
             Toast.makeText(PostDetail.this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
         } else {
             SaveComment(content, useruid, myTimestamp, postkey);
+            commentAdapter.notifyDataSetChanged();
         }
     }
 
@@ -191,12 +192,6 @@ public class PostDetail extends AppCompatActivity {
 
         Toast.makeText(PostDetail.this, "Comentario creado", Toast.LENGTH_SHORT).show();
         commentAdapter.notifyDataSetChanged();
-        Intent intent = getIntent();
-        overridePendingTransition(0, 0);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        finish();
-        overridePendingTransition(0, 0);
-        startActivity(intent);
     }
 
     private void loadComments() {

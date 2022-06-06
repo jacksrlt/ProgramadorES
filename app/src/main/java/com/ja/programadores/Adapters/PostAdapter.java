@@ -2,6 +2,8 @@ package com.ja.programadores.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +46,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
 
         holder.titleTV.setText(mData.get(position).getTitle());
         holder.nameTV.setText(mData.get(position).getName());
-        Glide.with(mContext).load(mData.get(position).getImage()).into(holder.imageIV);
+        Glide.with(mContext).load(mData.get(position).getImage()).placeholder(R.drawable.placeholder).into(holder.imageIV);
         Glide.with(mContext).load(mData.get(position).getAvatar()).circleCrop().into(holder.avatarIV);
 
     }
