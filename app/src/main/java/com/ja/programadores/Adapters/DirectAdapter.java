@@ -1,6 +1,7 @@
 package com.ja.programadores.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.ja.programadores.Constructors.Direct;
 import com.ja.programadores.R;
+import com.ja.programadores.UserProfile;
 
 import java.util.List;
 
@@ -60,6 +62,7 @@ public class DirectAdapter extends RecyclerView.Adapter<DirectAdapter.MyViewHold
             subjectTV = itemView.findViewById(R.id.subjectTV);
             nameTV = itemView.findViewById(R.id.nameTV);
             avatarIV = itemView.findViewById(R.id.avatarIV);
+
         }
     }
 }

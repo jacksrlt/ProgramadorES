@@ -114,6 +114,7 @@ public class BoardFragment extends Fragment {
                     board.setLocation(document.getString("location"));
                     board.setTimestamp(document.get("timestamp"));
                     String posterUid = document.getString("useruid");
+                    board.setPosteruid(posterUid);
                     DocumentReference userRef = collectionReferenceUsers.document(posterUid);
                     userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override

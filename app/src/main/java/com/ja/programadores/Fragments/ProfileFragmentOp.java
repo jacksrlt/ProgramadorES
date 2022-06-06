@@ -6,11 +6,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,9 +26,17 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.ja.programadores.Adapters.BoardAdapter;
+import com.ja.programadores.Constructors.Board;
 import com.ja.programadores.EditProfile;
 import com.ja.programadores.EditProfileOp;
 import com.ja.programadores.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileFragmentOp extends Fragment {
 
@@ -37,7 +48,12 @@ public class ProfileFragmentOp extends Fragment {
     private FirebaseFirestore fStore;
     FloatingActionButton fab;
     String currentUser;
+    RecyclerView userBoardRecycler;
+    BoardAdapter userBoardAdapter;
+    CollectionReference collectionReferenceBoards;
     CollectionReference collectionReferenceUsers;
+    List<Board> userBoardList;
+    ProgressBar progressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +65,8 @@ public class ProfileFragmentOp extends Fragment {
                              Bundle savedInstanceState) {
         //User Data
         View view = inflater.inflate(R.layout.fragment_profile_op, container, false);
+        userBoardRecycler = view.findViewById(R.id.userBoardRecycler);
+        userBoardRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         profileIv = view.findViewById(R.id.profileIv);
@@ -57,8 +75,44 @@ public class ProfileFragmentOp extends Fragment {
         webTv = view.findViewById(R.id.webTv);
         collectionReferenceUsers = fStore.collection("Users");
         currentUser = mAuth.getUid();
+        collectionReferenceBoards = fStore.collection("Boards");
+        userBoardList = new ArrayList<>();
+        userBoardAdapter = new BoardAdapter(getActivity(), userBoardList);
+        userBoardRecycler.setAdapter(userBoardAdapter);
+        progressBar = view.findViewById(R.id.progressBar);
+        loadPosts();
         showProfile();
         return view;
+    }
+
+    private void loadPosts() {
+        progressBar.setVisibility(View.VISIBLE);
+        Query boardQuery = collectionReferenceBoards.whereEqualTo("useruid", currentUser).orderBy("timestamp", Query.Direction.DESCENDING);
+        boardQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Board board = new Board();
+                    board.setTitle(document.getString("title"));
+                    board.setContent(document.getString("content"));
+                    board.setBoardkey(document.getId());
+                    board.setLocation(document.getString("location"));
+                    board.setTimestamp(document.get("timestamp"));
+                    String posterUid = document.getString("useruid");
+                    DocumentReference userRef = collectionReferenceUsers.document(posterUid);
+                    userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            board.setName(documentSnapshot.getString("name"));
+                            board.setAvatar(documentSnapshot.getString("image"));
+                            userBoardList.add(board);
+                            userBoardAdapter.notifyDataSetChanged();
+                            progressBar.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                }
+            }
+        });
     }
 
     @Override

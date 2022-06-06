@@ -15,7 +15,9 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.Timestamp;
 import com.ja.programadores.BoardDetail;
 import com.ja.programadores.Constructors.Board;
+import com.ja.programadores.OpProfile;
 import com.ja.programadores.R;
+import com.ja.programadores.UserProfile;
 
 import java.util.List;
 
@@ -64,6 +66,26 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.MyViewHolder
             tvName = itemView.findViewById(R.id.boardNameTV);
             tvLocation = itemView.findViewById(R.id.boardLocationTV);
             imgPostProfile = itemView.findViewById(R.id.boardAvatarIV);
+
+            imgPostProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent userDetail = new Intent(mContext, OpProfile.class);
+                    int position = getAdapterPosition();
+                    userDetail.putExtra("useruid", mData.get(position).getPosteruid());
+                    mContext.startActivity(userDetail);
+                }
+            });
+
+            tvName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent userDetail = new Intent(mContext, OpProfile.class);
+                    int position = getAdapterPosition();
+                    userDetail.putExtra("useruid", mData.get(position).getPosteruid());
+                    mContext.startActivity(userDetail);
+                }
+            });
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,7 @@ import java.util.HashMap;
 public class CreateBoard extends AppCompatActivity {
 
     FirebaseUser currentUser;
+    ProgressBar progressBar;
     private FirebaseAuth mAuth;
     private FirebaseFirestore fStore;
     FirebaseDatabase firebaseDatabase;
@@ -71,9 +73,13 @@ public class CreateBoard extends AppCompatActivity {
         contentEt = findViewById(R.id.contentEt);
         locationEt = findViewById(R.id.locationEt);
         sendBt = findViewById(R.id.sendBt);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
         sendBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
+                sendBt.setClickable(false);
                 sendBoard();
             }
         });
@@ -111,6 +117,9 @@ public class CreateBoard extends AppCompatActivity {
         documentReference.set(board);
 
         Toast.makeText(CreateBoard.this, "Publicación creada", Toast.LENGTH_SHORT).show();
+
+        progressBar.setVisibility(View.INVISIBLE);
+        sendBt.setClickable(true);
 
         Intent intent = new Intent(CreateBoard.this,
                 NavigationDrawer.class);

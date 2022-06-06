@@ -71,18 +71,8 @@ public class DirectFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        fab.setVisibility(View.VISIBLE);
-        fab.setClickable(true);
-        fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_send));
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent
-                        = new Intent(getContext(),
-                        NewDirect.class);
-                startActivity(intent);
-            }
-        });
+        fab.setVisibility(View.INVISIBLE);
+        fab.setClickable(false);
     }
 
     private void loadDirects() {

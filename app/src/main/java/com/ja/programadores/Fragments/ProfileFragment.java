@@ -6,11 +6,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,10 +26,17 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.ja.programadores.CreatePost;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.ja.programadores.Adapters.PostAdapter;
+import com.ja.programadores.Constructors.Post;
 import com.ja.programadores.EditProfile;
 import com.ja.programadores.EditProfileOp;
 import com.ja.programadores.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileFragment extends Fragment {
 
@@ -38,8 +48,13 @@ public class ProfileFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore fStore;
     FloatingActionButton fab;
+    RecyclerView userPostRecycler;
     String currentUser;
     CollectionReference collectionReferenceUsers;
+    CollectionReference collectionReferencePosts;
+    List<Post> userPostList;
+    PostAdapter userPostAdapter;
+    ProgressBar progressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,11 +73,54 @@ public class ProfileFragment extends Fragment {
         bioTv = view.findViewById(R.id.bioTv);
         githubTv = view.findViewById(R.id.githubTv);
         linkedinTv = view.findViewById(R.id.linkedinTv);
+        userPostRecycler = view.findViewById(R.id.userPostRecycler);
         collectionReferenceUsers = fStore.collection("Users");
+        userPostRecycler.setVisibility(View.INVISIBLE);
+        userPostRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         currentUser = mAuth.getUid();
+        collectionReferencePosts = fStore.collection("Posts");
+        userPostList = new ArrayList<>();
+        userPostAdapter = new PostAdapter(getActivity(), userPostList);
+        userPostRecycler.setAdapter(userPostAdapter);
+        userPostAdapter.notifyDataSetChanged();
+        progressBar = view.findViewById(R.id.progressBar);
         showProfile();
+        loadPosts();
         return view;
     }
+
+    private void loadPosts() {
+        progressBar.setVisibility(View.VISIBLE);
+        Query postQuery = collectionReferencePosts.whereEqualTo("useruid", currentUser).orderBy("timestamp", Query.Direction.DESCENDING);
+        postQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Post post = new Post();
+                    post.setTitle(document.getString("title"));
+                    post.setContent(document.getString("content"));
+                    post.setImage(document.getString("image"));
+                    post.setPostkey(document.getId());
+                    post.setTimestamp(document.get("timestamp"));
+                    String posterUid = document.getString("useruid");
+                    post.setPosteruid(posterUid);
+                    DocumentReference userRef = collectionReferenceUsers.document(posterUid);
+                    userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            post.setName(documentSnapshot.getString("name"));
+                            post.setAvatar(documentSnapshot.getString("image"));
+                            userPostList.add(post);
+                            userPostAdapter.notifyDataSetChanged();
+                            progressBar.setVisibility(View.INVISIBLE);
+                            userPostRecycler.setVisibility(View.VISIBLE);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

@@ -10,6 +10,8 @@ public class Direct{
     private String name;
     private String avatar;
     private String directkey;
+    private String senderuid;
+    private String recuid;
     private Object timestamp;
 
     public Direct(String subject, String message, String image, String name, String avatar) {
@@ -23,6 +25,14 @@ public class Direct{
 
     public Direct() {
     }
+
+    public String getRecuid() {return recuid;}
+
+    public void setRecuid(String recuid) {this.recuid = recuid;}
+
+    public String getSenderuid() {return senderuid;}
+
+    public void setSederuid(String senderuid) {this.senderuid = senderuid;}
 
     public String getDirectkey() {return directkey;}
 

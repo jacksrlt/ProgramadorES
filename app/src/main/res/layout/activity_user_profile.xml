@@ -148,5 +148,15 @@
             android:layout_height="wrap_content"
             android:text="Mensaje Privado" />
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/userPostRecycler"
+            app:layout_constraintEnd_toEndOf="@id/userPostRecycler"
+            app:layout_constraintTop_toTopOf="@id/userPostRecycler"
+            app:layout_constraintBottom_toBottomOf="@id/userPostRecycler" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
