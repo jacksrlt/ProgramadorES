@@ -12,7 +12,7 @@
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".UserProfile">
+        tools:context=".Fragments.ProfileFragment">
 
         <ImageView
             android:id="@+id/profileIv"
