@@ -117,6 +117,7 @@ public class ProfileFragment extends Fragment {
                         githubTv.setText(document.getString("github").toString());
                         Glide.with(getContext())
                                 .load(document.getString("image").toString())
+                                .circleCrop()
                                 .into(profileIv);
                     }
                 }

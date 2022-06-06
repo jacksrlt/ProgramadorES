@@ -16,6 +16,7 @@ import com.google.firebase.Timestamp;
 import com.ja.programadores.Constructors.Post;
 import com.ja.programadores.PostDetail;
 import com.ja.programadores.R;
+import com.ja.programadores.UserProfile;
 
 import java.util.List;
 
@@ -65,6 +66,25 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
             imageIV = itemView.findViewById(R.id.postImageIV);
             avatarIV = itemView.findViewById(R.id.boardAvatarIV);
 
+            avatarIV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent userDetail = new Intent(mContext, UserProfile.class);
+                    int position = getAdapterPosition();
+                    userDetail.putExtra("useruid", mData.get(position).getPosteruid());
+                    mContext.startActivity(userDetail);
+                }
+            });
+
+            nameTV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent userDetail = new Intent(mContext, UserProfile.class);
+                    int position = getAdapterPosition();
+                    userDetail.putExtra("useruid", mData.get(position).getPosteruid());
+                    mContext.startActivity(userDetail);
+                }
+            });
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

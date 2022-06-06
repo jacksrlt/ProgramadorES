@@ -1,6 +1,7 @@
 package com.ja.programadores;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
@@ -190,6 +191,12 @@ public class PostDetail extends AppCompatActivity {
 
         Toast.makeText(PostDetail.this, "Comentario creado", Toast.LENGTH_SHORT).show();
         commentAdapter.notifyDataSetChanged();
+        Intent intent = getIntent();
+        overridePendingTransition(0, 0);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
     }
 
     private void loadComments() {
@@ -214,6 +221,7 @@ public class PostDetail extends AppCompatActivity {
                             comment.setAvatar(documentSnapshot.getString("image"));
                             commentList.add(comment);
                             commentAdapter.notifyDataSetChanged();
+
                         }
                     });
                 }

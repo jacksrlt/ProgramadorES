@@ -10,6 +10,7 @@ public class Board {
     private String name;
     private String avatar;
     private String location;
+    private String posteruid;
     private Object timestamp;
 
     public Board(String title, String content, String location, String name, String avatar) {
@@ -23,6 +24,10 @@ public class Board {
 
     public Board() {
     }
+
+    public String getPosteruid() {return posteruid;}
+
+    public void setPosteruid(String posteruid) {this.posteruid = posteruid;}
 
     public String getLocation() {
         return location;

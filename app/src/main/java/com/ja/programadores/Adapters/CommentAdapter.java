@@ -1,6 +1,7 @@
 package com.ja.programadores.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.Timestamp;
 import com.ja.programadores.Constructors.Comment;
 import com.ja.programadores.R;
+import com.ja.programadores.UserProfile;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -63,6 +65,28 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
             tv_name = itemView.findViewById(R.id.commentNameTV);
             tv_content = itemView.findViewById(R.id.commentContentTV);
             tv_date = itemView.findViewById(R.id.commentDateTV);
+
+            img_user.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent userDetail = new Intent(mContext, UserProfile.class);
+                    int position = getAdapterPosition();
+                    userDetail.putExtra("useruid", mData.get(position).getUseruid());
+                    mContext.startActivity(userDetail);
+                }
+            });
+
+            tv_name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent userDetail = new Intent(mContext, UserProfile.class);
+                    int position = getAdapterPosition();
+                    userDetail.putExtra("useruid", mData.get(position).getUseruid());
+                    mContext.startActivity(userDetail);
+                }
+            });
+
+
         }
     }
 

@@ -16,6 +16,9 @@
         android:theme="@style/Theme.ProgramadorES"
         tools:targetApi="31">
         <activity
+            android:name=".UserProfile"
+            android:exported="false" />
+        <activity
             android:name=".NewDirect"
             android:exported="false" />
         <activity
@@ -39,7 +42,7 @@
         <activity
             android:name=".EditProfile"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".PostDetail"
             android:exported="false" />

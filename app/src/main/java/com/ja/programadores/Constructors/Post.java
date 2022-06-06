@@ -10,6 +10,7 @@ public class Post {
     private String image;
     private String name;
     private String avatar;
+    private String posteruid;
     private Object timestamp;
     private int likes;
 
@@ -25,6 +26,10 @@ public class Post {
 
     public Post() {
     }
+
+    public String getPosteruid() {return posteruid;}
+
+    public void setPosteruid(String posteruid) {this.posteruid = posteruid;}
 
     public int getLikes() {
         return likes;

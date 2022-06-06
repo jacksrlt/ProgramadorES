@@ -118,6 +118,7 @@ public class HomeFragment extends Fragment {
                     post.setPostkey(document.getId());
                     post.setTimestamp(document.get("timestamp"));
                     String posterUid = document.getString("useruid");
+                    post.setPosteruid(posterUid);
                     DocumentReference userRef = collectionReferenceUsers.document(posterUid);
                     userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
