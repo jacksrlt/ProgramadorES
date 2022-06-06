@@ -9,7 +9,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -107,7 +109,7 @@ public class Register extends AppCompatActivity {
                             userUID = mAuth.getCurrentUser().getUid();
                             DocumentReference documentReference = fStore.collection("Users").document(userUID);
                             Map<String, Boolean> userData = new HashMap<>();
-                            if (check = true) {
+                            if (check == true) {
                                 userData.put("op", true);
                             } else {
                                 userData.put("op", false);
