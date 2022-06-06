@@ -65,6 +65,7 @@ public class HomeFragment extends Fragment {
         postList = new ArrayList<>();
         postAdapter = new PostAdapter(getActivity(), postList);
         postRecyclerView.setAdapter(postAdapter);
+        postAdapter.notifyDataSetChanged();
         progressBar = view.findViewById(R.id.progressBar);
         loadPosts();
 

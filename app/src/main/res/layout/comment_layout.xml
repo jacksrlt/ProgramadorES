@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#f4f4f4"
-    android:paddingTop="8dp">
+    android:padding="8dp">
 
     <ImageView
-        android:id="@+id/comment_user_img"
+        android:id="@+id/userAvatarIV"
         android:layout_width="42dp"
         android:layout_height="42dp"
         android:layout_marginStart="16dp"
@@ -20,20 +20,19 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:textColor="#969595"
         android:textStyle="bold"
-        android:id="@+id/comment_username"
+        android:id="@+id/commentNameTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/comment_user_img"
+        app:layout_constraintStart_toEndOf="@+id/userAvatarIV"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/comment_content"
+        android:id="@+id/commentContentTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -43,15 +42,15 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:text="Text Comment Goes Here"
-        android:textColor="#969595"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/comment_user_img"
-        app:layout_constraintTop_toBottomOf="@+id/comment_username" />
+        app:layout_constraintStart_toEndOf="@+id/userAvatarIV"
+        app:layout_constraintTop_toBottomOf="@+id/commentNameTV" />
 
     <TextView
-        android:textSize="12sp"
-        android:id="@+id/comment_date"
+        android:textSize="12dp"
+        android:id="@+id/commentDateTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -62,6 +61,6 @@
         android:text="10:20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/comment_username"
+        app:layout_constraintStart_toEndOf="@+id/commentNameTV"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

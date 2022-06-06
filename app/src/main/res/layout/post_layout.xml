@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="250dp"
-    android:padding="6dp">
+    android:padding="6dp"
+    android:elevation="7dp">
 
 
     <ImageView
@@ -40,7 +41,7 @@
         app:srcCompat="@drawable/black_gradient" />
 
     <TextView
-        android:id="@+id/postTitleTV"
+        android:id="@+id/boardTitleTV"
         android:layout_width="192dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -59,11 +60,11 @@
         android:layout_marginTop="32dp"
         android:text="TextView"
         android:textColor="#fff"
-        app:layout_constraintStart_toEndOf="@+id/postAvatarIV"
+        app:layout_constraintStart_toEndOf="@+id/boardAvatarIV"
         app:layout_constraintTop_toTopOf="@+id/gradient2" />
 
     <ImageView
-        android:id="@+id/postAvatarIV"
+        android:id="@+id/boardAvatarIV"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"

@@ -38,11 +38,9 @@ public class Post {
 
     public void setAvatar(String avatar) {this.avatar = avatar;}
 
-    public String getPostkey() {
-        return postkey;
-    }
+    public String getPostkey() {return postkey;}
 
-    public void setPostkey(String postKey) {
+    public void setPostkey(String postkey) {
         this.postkey = postkey;
     }
 

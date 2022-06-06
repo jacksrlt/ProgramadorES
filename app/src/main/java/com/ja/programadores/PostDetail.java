@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,8 +34,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.ja.programadores.Adapters.CommentAdapter;
-import com.ja.programadores.Adapters.PostAdapter;
 import com.ja.programadores.Constructors.Comment;
+import com.ja.programadores.Constructors.Post;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -65,18 +66,18 @@ public class PostDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
 
-        // ini Views
-        RvComment = findViewById(R.id.rv_comment);
-        imgPost = findViewById(R.id.post_detail_img);
-        imgUserPost = findViewById(R.id.post_detail_user_img);
-        imgCurrentUser = findViewById(R.id.post_detail_currentuser_img);
+        //Views
+        RvComment = findViewById(R.id.commentRecycler);
+        imgPost = findViewById(R.id.postPictureIV);
+        imgUserPost = findViewById(R.id.postPosterAvatarIV);
+        imgCurrentUser = findViewById(R.id.postAvatarIV);
 
-        txtPostTitle = findViewById(R.id.post_detail_title);
-        txtPostDesc = findViewById(R.id.post_detail_desc);
-        txtPostDateName = findViewById(R.id.post_detail_date_name);
+        txtPostTitle = findViewById(R.id.postTitleTV);
+        txtPostDesc = findViewById(R.id.postContentTV);
+        txtPostDateName = findViewById(R.id.postNameDateTV);
 
-        editTextComment = findViewById(R.id.post_detail_comment);
-        btnAddComment = findViewById(R.id.post_detail_add_comment_btn);
+        editTextComment = findViewById(R.id.postCommentET);
+        btnAddComment = findViewById(R.id.postCommentBT);
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -107,7 +108,7 @@ public class PostDetail extends AppCompatActivity {
         txtPostTitle.setText(postTitle);
 
         String userpostImage = getIntent().getExtras().getString("avatar");
-        Glide.with(this).load(userpostImage).into(imgUserPost);
+        Glide.with(this).load(userpostImage).circleCrop().into(imgUserPost);
 
         String postDescription = getIntent().getExtras().getString("content");
         txtPostDesc.setText(postDescription);
@@ -131,17 +132,18 @@ public class PostDetail extends AppCompatActivity {
             }
         });
 
-        // get post id
+        //Postkey
         PostKey = getIntent().getExtras().getString("postkey");
 
-
-        // ini Recyclerview Comment
+        //Comments
         commentList = new ArrayList<>();
         commentAdapter = new CommentAdapter(this, commentList);
         RvComment.setAdapter(commentAdapter);
+        commentAdapter.notifyDataSetChanged();
         loadComments();
 
     }
+
 
     private void userType() {
         DocumentReference docRef = fStore.collection("Users").document(mAuth.getCurrentUser().getUid());
@@ -163,7 +165,7 @@ public class PostDetail extends AppCompatActivity {
     private void sendComment() {
         final String content = editTextComment.getText().toString();
         final String useruid = mAuth.getCurrentUser().getUid();
-        final String postkey = getIntent().getExtras().getString("postkey");
+        final String postkey = PostKey;
         Object myTimestamp = FieldValue.serverTimestamp();
         if (content.isEmpty()) {
             Toast.makeText(PostDetail.this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();

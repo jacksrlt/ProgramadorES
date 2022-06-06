@@ -33,17 +33,17 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     @NonNull
     @Override
     public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View row = LayoutInflater.from(mContext).inflate(R.layout.comment_layout,parent,false);
+        View row = LayoutInflater.from(mContext).inflate(R.layout.comment_layout, parent, false);
         return new CommentViewHolder(row);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
 
-        Glide.with(mContext).load(mData.get(position).getAvatar()).into(holder.img_user);
+        Glide.with(mContext).load(mData.get(position).getAvatar()).circleCrop().into(holder.img_user);
         holder.tv_name.setText(mData.get(position).getName());
         holder.tv_content.setText(mData.get(position).getContent());
-        holder.tv_date.setText(dateToString((Timestamp)mData.get(position).getTimestamp()));
+        holder.tv_date.setText(dateToString((Timestamp) mData.get(position).getTimestamp()));
 
     }
 
@@ -52,17 +52,17 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         return mData.size();
     }
 
-    public class CommentViewHolder extends RecyclerView.ViewHolder{
+    public class CommentViewHolder extends RecyclerView.ViewHolder {
 
         ImageView img_user;
-        TextView tv_name,tv_content,tv_date;
+        TextView tv_name, tv_content, tv_date;
 
         public CommentViewHolder(View itemView) {
             super(itemView);
-            img_user = itemView.findViewById(R.id.comment_user_img);
-            tv_name = itemView.findViewById(R.id.comment_username);
-            tv_content = itemView.findViewById(R.id.comment_content);
-            tv_date = itemView.findViewById(R.id.comment_date);
+            img_user = itemView.findViewById(R.id.userAvatarIV);
+            tv_name = itemView.findViewById(R.id.commentNameTV);
+            tv_content = itemView.findViewById(R.id.commentContentTV);
+            tv_date = itemView.findViewById(R.id.commentDateTV);
         }
     }
 

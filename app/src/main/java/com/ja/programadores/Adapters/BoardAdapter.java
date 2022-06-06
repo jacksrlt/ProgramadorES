@@ -58,8 +58,8 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.MyViewHolder
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvTitle = itemView.findViewById(R.id.postTitleTV);
-            imgPostProfile = itemView.findViewById(R.id.postAvatarIV);
+            tvTitle = itemView.findViewById(R.id.boardTitleTV);
+            imgPostProfile = itemView.findViewById(R.id.boardAvatarIV);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
