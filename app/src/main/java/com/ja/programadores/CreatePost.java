@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class CreatePost extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore fStore;
     FirebaseDatabase firebaseDatabase;
+    ProgressBar progressBar;
     TextView nameTv;
     ImageView avatarIV, pictureIV;
     EditText titleEt, contentEt;
@@ -58,6 +60,9 @@ public class CreatePost extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
+
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
 
         //User Data
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -99,6 +104,8 @@ public class CreatePost extends AppCompatActivity {
         if (title.isEmpty() || content.isEmpty()) {
             Toast.makeText(CreatePost.this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
         } else {
+            progressBar.setVisibility(View.VISIBLE);
+            sendBt.setClickable(false);
             SavePost(title, content, pickedImgUri, useruid, myTimestamp);
         }
 
@@ -141,11 +148,14 @@ public class CreatePost extends AppCompatActivity {
                         DocumentReference documentReference = fStore.collection("Posts").document(key);
                         documentReference.set(post);
 
+                        progressBar.setVisibility(View.INVISIBLE);
+
                         Toast.makeText(CreatePost.this, "Publicación creada", Toast.LENGTH_SHORT).show();
 
                         Intent intent
                                 = new Intent(CreatePost.this,
                                 NavigationDrawer.class);
+                        sendBt.setClickable(true);
                         startActivity(intent);
                         finish();
 
@@ -168,11 +178,14 @@ public class CreatePost extends AppCompatActivity {
             DocumentReference documentReference = fStore.collection("Posts").document(key);
             documentReference.set(post);
 
+            progressBar.setVisibility(View.INVISIBLE);
+
             Toast.makeText(CreatePost.this, "Publicación creada", Toast.LENGTH_SHORT).show();
 
             Intent intent
                     = new Intent(CreatePost.this,
                     NavigationDrawer.class);
+            sendBt.setClickable(true);
             startActivity(intent);
             finish();
 
@@ -229,6 +242,7 @@ public class CreatePost extends AppCompatActivity {
                         nameTv.setText(document.getString("name").toString());
                         Glide.with(getApplicationContext())
                                 .load(document.getString("image").toString())
+                                .circleCrop()
                                 .into(avatarIV);
                     }
                 }

@@ -124,7 +124,8 @@ public class PostDetail extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     Glide.with(getApplicationContext())
-                            .load(document.getString("image").toString())
+                            .load(document.getString("image"))
+                            .circleCrop()
                             .into(imgCurrentUser);
                 }
             }

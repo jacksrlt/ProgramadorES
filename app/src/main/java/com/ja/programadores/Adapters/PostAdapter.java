@@ -41,9 +41,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        holder.tvTitle.setText(mData.get(position).getTitle());
-        Glide.with(mContext).load(mData.get(position).getImage()).into(holder.imgPost);
-        Glide.with(mContext).load(mData.get(position).getAvatar()).into(holder.imgPostProfile);
+        holder.titleTV.setText(mData.get(position).getTitle());
+        holder.nameTV.setText(mData.get(position).getName());
+        Glide.with(mContext).load(mData.get(position).getImage()).into(holder.imageIV);
+        Glide.with(mContext).load(mData.get(position).getAvatar()).circleCrop().into(holder.avatarIV);
 
     }
 
@@ -54,31 +55,31 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvTitle;
-        ImageView imgPost;
-        ImageView imgPostProfile;
+        TextView titleTV, nameTV;
+        ImageView imageIV, avatarIV;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvTitle = itemView.findViewById(R.id.row_post_title);
-            imgPost = itemView.findViewById(R.id.row_post_img);
-            imgPostProfile = itemView.findViewById(R.id.row_post_profile_img);
+            titleTV = itemView.findViewById(R.id.postTitleTV);
+            nameTV = itemView.findViewById(R.id.postNameTV);
+            imageIV = itemView.findViewById(R.id.postImageIV);
+            avatarIV = itemView.findViewById(R.id.postAvatarIV);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent postDetail = new Intent(mContext,PostDetail.class);
+                    Intent postDetail = new Intent(mContext, PostDetail.class);
                     int position = getAdapterPosition();
 
-                    postDetail.putExtra("title",mData.get(position).getTitle());
-                    postDetail.putExtra("image",mData.get(position).getImage());
-                    postDetail.putExtra("content",mData.get(position).getContent());
-                    postDetail.putExtra("postkey",mData.get(position).getPostkey());
-                    postDetail.putExtra("avatar",mData.get(position).getAvatar());
-                    postDetail.putExtra("name",mData.get(position).getName());
-                    Timestamp timestamp  = (Timestamp) mData.get(position).getTimestamp();
-                    postDetail.putExtra("timestamp",timestamp) ;
+                    postDetail.putExtra("title", mData.get(position).getTitle());
+                    postDetail.putExtra("image", mData.get(position).getImage());
+                    postDetail.putExtra("content", mData.get(position).getContent());
+                    postDetail.putExtra("postkey", mData.get(position).getPostkey());
+                    postDetail.putExtra("avatar", mData.get(position).getAvatar());
+                    postDetail.putExtra("name", mData.get(position).getName());
+                    Timestamp timestamp = (Timestamp) mData.get(position).getTimestamp();
+                    postDetail.putExtra("timestamp", timestamp);
                     mContext.startActivity(postDetail);
 
                 }
@@ -87,4 +88,5 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
 
         }
     }
+
 }

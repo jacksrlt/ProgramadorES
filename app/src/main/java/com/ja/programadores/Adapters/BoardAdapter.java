@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.Timestamp;
 import com.ja.programadores.BoardDetail;
 import com.ja.programadores.Constructors.Board;
-import com.ja.programadores.PostDetail;
 import com.ja.programadores.R;
 
 import java.util.List;
@@ -59,8 +58,8 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.MyViewHolder
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvTitle = itemView.findViewById(R.id.row_post_title);
-            imgPostProfile = itemView.findViewById(R.id.row_post_profile_img);
+            tvTitle = itemView.findViewById(R.id.postTitleTV);
+            imgPostProfile = itemView.findViewById(R.id.postAvatarIV);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {

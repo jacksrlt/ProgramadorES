@@ -83,9 +83,10 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        name.setText(document.getString("name").toString());
+                        name.setText(document.getString("name"));
                         Glide.with(getApplicationContext())
-                                .load(document.getString("image").toString())
+                                .load(document.getString("image"))
+                                .circleCrop()
                                 .into(avatar);
                         op = document.getBoolean("op");
                     }
