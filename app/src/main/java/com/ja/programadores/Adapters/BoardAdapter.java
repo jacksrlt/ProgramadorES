@@ -14,10 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.Timestamp;
 import com.ja.programadores.BoardDetail;
-import com.ja.programadores.Constructors.Board;
+import com.ja.programadores.POJO.Board;
 import com.ja.programadores.OpProfile;
 import com.ja.programadores.R;
-import com.ja.programadores.UserProfile;
 
 import java.util.List;
 

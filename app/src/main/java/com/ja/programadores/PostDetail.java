@@ -1,7 +1,6 @@
 package com.ja.programadores;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
@@ -15,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,8 +33,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.ja.programadores.Adapters.CommentAdapter;
-import com.ja.programadores.Constructors.Comment;
-import com.ja.programadores.Constructors.Post;
+import com.ja.programadores.POJO.Comment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

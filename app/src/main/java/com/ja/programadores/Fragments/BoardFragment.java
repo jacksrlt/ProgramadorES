@@ -26,12 +26,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.ja.programadores.Adapters.BoardAdapter;
-import com.ja.programadores.Adapters.PostAdapter;
-import com.ja.programadores.Constructors.Board;
-import com.ja.programadores.Constructors.Post;
+import com.ja.programadores.POJO.Board;
 import com.ja.programadores.CreateBoard;
-import com.ja.programadores.CreatePost;
-import com.ja.programadores.EditProfile;
 import com.ja.programadores.R;
 
 import java.util.ArrayList;

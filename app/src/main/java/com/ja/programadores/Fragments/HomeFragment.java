@@ -8,7 +8,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,9 +27,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.ja.programadores.Adapters.PostAdapter;
-import com.ja.programadores.Constructors.Post;
+import com.ja.programadores.POJO.Post;
 import com.ja.programadores.CreatePost;
-import com.ja.programadores.EditProfile;
 import com.ja.programadores.R;
 
 import java.util.ArrayList;

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ public class Register extends AppCompatActivity {
     private Button registerBt;
     private FirebaseAuth mAuth;
     private boolean check;
+    ProgressBar progressBar;
     FirebaseFirestore fStore;
     String userUID;
 
@@ -50,6 +52,9 @@ public class Register extends AppCompatActivity {
         password2Et = findViewById(R.id.password2Et);
         registerBt = findViewById(R.id.registerBt);
         checkBox = (CheckBox) findViewById(R.id.checkBox);
+        progressBar = findViewById(R.id.progressBar);
+
+        progressBar.setVisibility(View.INVISIBLE);
 
         //Onclick Listener en Botón de registro
         registerBt.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +66,10 @@ public class Register extends AppCompatActivity {
     }
 
     private void registerNewUser() {
+
+        progressBar.setVisibility(View.VISIBLE);
+        registerBt.setClickable(false);
+
         //Tomar los valores de los EditText como String
         String email, password, password2;
         email = emailEt.getText().toString();
@@ -70,6 +79,8 @@ public class Register extends AppCompatActivity {
 
         //Validación de email, contraseña y usuario
         if (TextUtils.isEmpty(email)) {
+            progressBar.setVisibility(View.INVISIBLE);
+            registerBt.setClickable(true);
             Toast.makeText(getApplicationContext(),
                             "Por favor, inserte una dirección de correo electrónico",
                             Toast.LENGTH_LONG)
@@ -77,6 +88,8 @@ public class Register extends AppCompatActivity {
             return;
         }
         if (TextUtils.isEmpty(password)) {
+            progressBar.setVisibility(View.INVISIBLE);
+            registerBt.setClickable(true);
             Toast.makeText(getApplicationContext(),
                             "Por favor, inserte una contraseña",
                             Toast.LENGTH_LONG)
@@ -85,6 +98,8 @@ public class Register extends AppCompatActivity {
         }
 
         if (!password.equals(password2)) {
+            progressBar.setVisibility(View.INVISIBLE);
+            registerBt.setClickable(true);
             Toast.makeText(getApplicationContext(),
                             "Las contraseñas no coinciden",
                             Toast.LENGTH_LONG)
@@ -117,6 +132,8 @@ public class Register extends AppCompatActivity {
                             userData.put("first", true);
                             documentReference.set(userData);
                             //Enviar a login si el usuario fue creado
+                            progressBar.setVisibility(View.INVISIBLE);
+                            registerBt.setClickable(true);
                             Intent intent
                                     = new Intent(Register.this,
                                     Login.class);
@@ -124,6 +141,8 @@ public class Register extends AppCompatActivity {
                         } else {
 
                             // Registro fallido
+                            progressBar.setVisibility(View.INVISIBLE);
+                            registerBt.setClickable(true);
                             Toast.makeText(
                                             getApplicationContext(),
                                             "No se ha creado el usuario, intente nuevamente",

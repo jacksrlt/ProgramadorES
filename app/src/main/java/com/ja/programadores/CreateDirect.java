@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,16 +41,17 @@ import com.ja.programadores.Drawers.NavigationDrawer;
 
 import java.util.HashMap;
 
-public class NewDirect extends AppCompatActivity {
+public class CreateDirect extends AppCompatActivity {
 
     FirebaseUser currentUser;
+    ProgressBar progressBar;
     private StorageReference storageProfilePicRef;
     private FirebaseAuth mAuth;
     private FirebaseFirestore fStore;
     FirebaseDatabase firebaseDatabase;
     TextView nameTv;
     ImageView avatarIV, pictureIV;
-    EditText subjectEt, messageEt, recEt;
+    EditText subjectEt, messageEt;
     Button sendBt;
     private String myUri = "";
     private Uri pickedImgUri = null;
@@ -57,14 +59,17 @@ public class NewDirect extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_direct);
+        setContentView(R.layout.activity_create_direct);
 
         //User Data
+        progressBar = findViewById(R.id.progressBar);
         firebaseDatabase = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         currentUser = mAuth.getCurrentUser();
         storageProfilePicRef = FirebaseStorage.getInstance().getReference().child("direct_pictures");
+
+        progressBar.setVisibility(View.INVISIBLE);
 
         //Setup User Show
         showUserData();
@@ -79,27 +84,35 @@ public class NewDirect extends AppCompatActivity {
         });
 
         //Make post
-        subjectEt = findViewById(R.id.subjectEt);
-        messageEt = findViewById(R.id.messageEt);
-        recEt = findViewById(R.id.recEt);
+        subjectEt = findViewById(R.id.titleEt);
+        messageEt = findViewById(R.id.contentEt);
         sendBt = findViewById(R.id.sendBt);
         sendBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
+                sendBt.setClickable(false);
                 sendDirect();
             }
         });
 
+        if (getIntent().getExtras().getString("subject") != null) {
+            subjectEt.setText("RE:" + getIntent().getExtras().getString("subject"));
+        }
+
     }
 
     private void sendDirect() {
+        String rec = getIntent().getExtras().getString("recuid");
         final String title = subjectEt.getText().toString();
         final String content = messageEt.getText().toString();
         final String senderuid = mAuth.getCurrentUser().getUid();
-        final String recuid = recEt.getText().toString();
+        final String recuid = rec;
         Object myTimestamp = FieldValue.serverTimestamp();
         if (title.isEmpty() || content.isEmpty()) {
-            Toast.makeText(NewDirect.this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.INVISIBLE);
+            sendBt.setClickable(true);
+            Toast.makeText(CreateDirect.this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
         } else {
             SavePost(title, content, pickedImgUri, senderuid, recuid, myTimestamp);
         }
@@ -143,10 +156,13 @@ public class NewDirect extends AppCompatActivity {
                         DocumentReference documentReference = fStore.collection("Directs").document(key);
                         documentReference.set(direct);
 
-                        Toast.makeText(NewDirect.this, "Mensaje enviado", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        sendBt.setClickable(true);
+
+                        Toast.makeText(CreateDirect.this, "Mensaje enviado", Toast.LENGTH_SHORT).show();
 
                         Intent intent
-                                = new Intent(NewDirect.this,
+                                = new Intent(CreateDirect.this,
                                 NavigationDrawer.class);
                         startActivity(intent);
                         finish();
@@ -170,10 +186,13 @@ public class NewDirect extends AppCompatActivity {
             DocumentReference documentReference = fStore.collection("Directs").document(key);
             documentReference.set(direct);
 
-            Toast.makeText(NewDirect.this, "Mensaje Enviado", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.INVISIBLE);
+            sendBt.setClickable(true);
+
+            Toast.makeText(CreateDirect.this, "Mensaje Enviado", Toast.LENGTH_SHORT).show();
 
             Intent intent
-                    = new Intent(NewDirect.this,
+                    = new Intent(CreateDirect.this,
                     NavigationDrawer.class);
             startActivity(intent);
             finish();
@@ -190,12 +209,12 @@ public class NewDirect extends AppCompatActivity {
     }
 
     private void checkAndRequestForPermission() {
-        if (ContextCompat.checkSelfPermission(NewDirect.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (ContextCompat.checkSelfPermission(CreateDirect.this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(NewDirect.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                Toast.makeText(NewDirect.this, "Debe aceptar los permisos", Toast.LENGTH_SHORT).show();
+            if (ActivityCompat.shouldShowRequestPermissionRationale(CreateDirect.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                Toast.makeText(CreateDirect.this, "Debe aceptar los permisos", Toast.LENGTH_SHORT).show();
             } else {
-                ActivityCompat.requestPermissions(NewDirect.this,
+                ActivityCompat.requestPermissions(CreateDirect.this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PReqCode);
             }
         } else {
@@ -219,9 +238,10 @@ public class NewDirect extends AppCompatActivity {
     }
 
     private void showUserData() {
+        String rec = getIntent().getExtras().getString("recuid");
         avatarIV = findViewById(R.id.avatarIV);
         nameTv = findViewById(R.id.nameTV);
-        DocumentReference docRef = fStore.collection("Users").document(mAuth.getCurrentUser().getUid());
+        DocumentReference docRef = fStore.collection("Users").document(rec);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {

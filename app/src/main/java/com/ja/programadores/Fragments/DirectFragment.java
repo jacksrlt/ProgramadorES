@@ -1,6 +1,5 @@
 package com.ja.programadores.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,9 +26,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.ja.programadores.Adapters.DirectAdapter;
-import com.ja.programadores.Constructors.Direct;
-import com.ja.programadores.CreatePost;
-import com.ja.programadores.NewDirect;
+import com.ja.programadores.POJO.Direct;
 import com.ja.programadores.R;
 
 import java.util.ArrayList;
@@ -37,6 +35,7 @@ import java.util.List;
 public class DirectFragment extends Fragment {
 
     RecyclerView directRecyclerView;
+    ProgressBar progressBar;
     DirectAdapter directAdapter;
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth mAuth;
@@ -56,6 +55,7 @@ public class DirectFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getUid();
+        progressBar = view.findViewById(R.id.progressBar);
         collectionReferenceDirects = firebaseFirestore.collection("Directs");
         collectionReferenceUsers = firebaseFirestore.collection("Users");
         directList = new ArrayList<>();
@@ -85,9 +85,11 @@ public class DirectFragment extends Fragment {
                     Direct direct = new Direct();
                     direct.setSubject(document.getString("subject"));
                     direct.setMessage(document.getString("message"));
+                    direct.setTimestamp(document.get("timestamp"));
                     direct.setDirectkey(document.getId());
                     direct.setImage(document.getString("image"));
                     String senderUid = document.getString("sender");
+                    direct.setSederuid(senderUid);
                     DocumentReference userRef = collectionReferenceUsers.document(senderUid);
                     userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
@@ -96,6 +98,7 @@ public class DirectFragment extends Fragment {
                             direct.setAvatar(documentSnapshot.getString("image"));
                             directList.add(direct);
                             directAdapter.notifyDataSetChanged();
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                     });
                 }

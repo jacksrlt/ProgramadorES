@@ -81,6 +81,7 @@ public class CreateProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
+                saveBt.setClickable(false);
                 final String name = nameEt.getText().toString();
                 final String bio = bioEt.getText().toString();
                 final String linkedin = linkedinEt.getText().toString();
@@ -88,9 +89,11 @@ public class CreateProfile extends AppCompatActivity {
                 if (pickedImgUri == null) {
                     Toast.makeText(CreateProfile.this, "Debe seleccionar una imagen de perfil", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.INVISIBLE);
+                    saveBt.setClickable(true);
                 } else if (name.isEmpty() || bio.isEmpty() || linkedin.isEmpty() || github.isEmpty()) {
                     Toast.makeText(CreateProfile.this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.INVISIBLE);
+                    saveBt.setClickable(true);
                 } else {
                     SaveProfile(name, bio, linkedin, github, pickedImgUri, mAuth.getCurrentUser());
                 }
@@ -131,6 +134,8 @@ public class CreateProfile extends AppCompatActivity {
                     String userUID = mAuth.getCurrentUser().getUid();
                     DocumentReference documentReference = fStore.collection("Users").document(userUID);
                     documentReference.set(userMap);
+                    progressBar.setVisibility(View.INVISIBLE);
+                    saveBt.setClickable(true);
 
                     Intent intent
                             = new Intent(CreateProfile.this,

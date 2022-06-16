@@ -1,4 +1,4 @@
-package com.ja.programadores.Constructors;
+package com.ja.programadores.POJO;
 
 import com.google.firebase.database.ServerValue;
 

@@ -80,15 +80,18 @@ public class CreateProfileOp extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
+                saveBt.setClickable(false);
                 final String name = nameEt.getText().toString();
                 final String desc = descEt.getText().toString();
                 final String web = webEt.getText().toString();
                 if (pickedImgUri == null) {
                     Toast.makeText(CreateProfileOp.this, "Debe seleccionar una imagen de perfil", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.INVISIBLE);
+                    saveBt.setClickable(true);
                 } else if (name.isEmpty() || desc.isEmpty() || web.isEmpty()) {
                     Toast.makeText(CreateProfileOp.this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.INVISIBLE);
+                    saveBt.setClickable(true);
                 } else {
                     SaveProfile(name, desc, web, pickedImgUri, mAuth.getCurrentUser());
                 }
@@ -128,6 +131,9 @@ public class CreateProfileOp extends AppCompatActivity {
                     String userUID = mAuth.getCurrentUser().getUid();
                     DocumentReference documentReference = fStore.collection("Users").document(userUID);
                     documentReference.set(userMap);
+
+                    progressBar.setVisibility(View.INVISIBLE);
+                    saveBt.setClickable(true);
 
                     Intent intent
                             = new Intent(CreateProfileOp.this,

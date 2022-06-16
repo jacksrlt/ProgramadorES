@@ -11,7 +11,7 @@
     <RelativeLayout
         android:id="@+id/clickRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:padding="10dp">
 
         <ImageView
@@ -34,12 +34,12 @@
         <TextView
             android:id="@+id/subjectTV"
             android:layout_width="256dp"
-            android:layout_height="98dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="24dp"
             android:layout_toRightOf="@id/avatarIV"
             android:maxLength="350"
-            android:text="Message"
+            android:text="Subject"
             android:textSize="16dp" />
 
     </RelativeLayout>

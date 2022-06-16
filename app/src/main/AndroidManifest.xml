@@ -22,7 +22,7 @@
             android:name=".UserProfile"
             android:exported="false" />
         <activity
-            android:name=".NewDirect"
+            android:name=".CreateDirect"
             android:exported="false" />
         <activity
             android:name=".DirectDetail"

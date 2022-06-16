@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -15,8 +17,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -25,7 +26,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.ja.programadores.Adapters.PostAdapter;
-import com.ja.programadores.Constructors.Post;
+import com.ja.programadores.POJO.Post;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,7 @@ public class UserProfile extends AppCompatActivity {
     CollectionReference collectionReferenceUsers;
     CollectionReference collectionReferencePosts;
     List<Post> userPostList;
+    Button sendDirect;
     PostAdapter userPostAdapter;
     ProgressBar progressBar;
     String useruid;
@@ -52,6 +54,7 @@ public class UserProfile extends AppCompatActivity {
         setContentView(R.layout.activity_user_profile);
 
         fStore = FirebaseFirestore.getInstance();
+        sendDirect = findViewById(R.id.directBt);
         profileIv = findViewById(R.id.profileIv);
         nameTv = findViewById(R.id.nameTv);
         bioTv = findViewById(R.id.bioTv);
@@ -69,6 +72,15 @@ public class UserProfile extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
 
         useruid = getIntent().getExtras().getString("useruid");
+
+        sendDirect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent createDirect = new Intent(UserProfile.this, CreateDirect.class);
+                createDirect.putExtra("recuid", useruid);
+                startActivity(createDirect);
+            }
+        });
 
         showProfile();
         loadPosts();

@@ -130,7 +130,7 @@ public class Login extends AppCompatActivity {
                                                             startActivity(intent);
                                                             finish();
                                                         }
-                                                    } else {
+                                                    } else if (document.getBoolean("first") != true) {
                                                         //Intent a NavigationDrawer
                                                         Intent intent
                                                                 = new Intent(Login.this,

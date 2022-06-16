@@ -30,7 +30,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.ja.programadores.Adapters.PostAdapter;
-import com.ja.programadores.Constructors.Post;
+import com.ja.programadores.POJO.Post;
 import com.ja.programadores.EditProfile;
 import com.ja.programadores.EditProfileOp;
 import com.ja.programadores.R;

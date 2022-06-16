@@ -2,8 +2,6 @@ package com.ja.programadores.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.Timestamp;
-import com.ja.programadores.Constructors.Post;
+import com.ja.programadores.POJO.Post;
 import com.ja.programadores.PostDetail;
 import com.ja.programadores.R;
 import com.ja.programadores.UserProfile;

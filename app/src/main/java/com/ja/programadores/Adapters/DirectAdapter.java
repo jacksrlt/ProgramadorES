@@ -12,9 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.ja.programadores.Constructors.Direct;
+import com.google.firebase.Timestamp;
+import com.ja.programadores.DirectDetail;
+import com.ja.programadores.POJO.Direct;
+import com.ja.programadores.PostDetail;
 import com.ja.programadores.R;
-import com.ja.programadores.UserProfile;
 
 import java.util.List;
 
@@ -40,10 +42,9 @@ public class DirectAdapter extends RecyclerView.Adapter<DirectAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        holder.subjectTV.setText(mData.get(position).getSubject());
         holder.nameTV.setText(mData.get(position).getName());
-        Glide.with(mContext).load(mData.get(position).getAvatar()).into(holder.avatarIV);
-
+        holder.subjectTV.setText(mData.get(position).getSubject());
+        Glide.with(mContext).load(mData.get(position).getAvatar()).circleCrop().into(holder.avatarIV);
 
     }
 
@@ -62,6 +63,27 @@ public class DirectAdapter extends RecyclerView.Adapter<DirectAdapter.MyViewHold
             subjectTV = itemView.findViewById(R.id.subjectTV);
             nameTV = itemView.findViewById(R.id.nameTV);
             avatarIV = itemView.findViewById(R.id.avatarIV);
+
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent directDetail = new Intent(mContext, DirectDetail.class);
+                    int position = getAdapterPosition();
+
+                    directDetail.putExtra("subject", mData.get(position).getSubject());
+                    directDetail.putExtra("senderuid", mData.get(position).getSenderuid());
+                    directDetail.putExtra("image", mData.get(position).getImage());
+                    directDetail.putExtra("message", mData.get(position).getMessage());
+                    directDetail.putExtra("directkey", mData.get(position).getDirectkey());
+                    directDetail.putExtra("avatar", mData.get(position).getAvatar());
+                    directDetail.putExtra("name", mData.get(position).getName());
+                    Timestamp timestamp = (Timestamp) mData.get(position).getTimestamp();
+                    directDetail.putExtra("timestamp", timestamp);
+                    mContext.startActivity(directDetail);
+
+                }
+            });
 
         }
     }

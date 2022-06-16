@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -15,8 +17,6 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -25,7 +25,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.ja.programadores.Adapters.BoardAdapter;
-import com.ja.programadores.Constructors.Board;
+import com.ja.programadores.POJO.Board;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +36,7 @@ public class OpProfile extends AppCompatActivity {
     TextView nameTv;
     TextView descTv;
     TextView webTv;
+    Button sendDirect;
     private FirebaseFirestore fStore;
     RecyclerView userBoardRecycler;
     BoardAdapter userBoardAdapter;
@@ -53,6 +54,7 @@ public class OpProfile extends AppCompatActivity {
         userBoardRecycler = findViewById(R.id.userBoardRecycler);
         userBoardRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         fStore = FirebaseFirestore.getInstance();
+        sendDirect = findViewById(R.id.directBt);
         profileIv = findViewById(R.id.profileIv);
         nameTv = findViewById(R.id.nameTv);
         descTv = findViewById(R.id.descTv);
@@ -65,6 +67,15 @@ public class OpProfile extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
 
         useruid = getIntent().getExtras().getString("useruid");
+
+        sendDirect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent createDirect = new Intent(OpProfile.this, CreateDirect.class);
+                createDirect.putExtra("recuid", useruid);
+                startActivity(createDirect);
+            }
+        });
 
         loadPosts();
         showProfile();
