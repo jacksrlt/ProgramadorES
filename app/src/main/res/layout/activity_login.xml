@@ -45,17 +45,27 @@
             app:layout_constraintStart_toStartOf="@id/guideline6"
             app:layout_constraintTop_toBottomOf="@id/emailEt" />
 
+        <CheckBox
+            android:id="@+id/remember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recordar usuario"
+            app:layout_constraintStart_toStartOf="@id/guideline6"
+            app:layout_constraintEnd_toEndOf="@id/guideline7"
+            app:layout_constraintTop_toBottomOf="@id/passwordEt"
+            android:layout_marginTop="6dp"/>
+
         <Button
             android:id="@+id/loginBt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="15dp"
             android:backgroundTint="#87A7BC"
             android:text="Login"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="@id/guideline7"
             app:layout_constraintStart_toStartOf="@id/guideline6"
-            app:layout_constraintTop_toBottomOf="@id/passwordEt" />
+            app:layout_constraintTop_toBottomOf="@id/remember" />
 
         <Button
             android:id="@+id/registerBt"

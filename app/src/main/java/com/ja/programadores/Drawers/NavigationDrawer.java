@@ -9,7 +9,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -34,6 +36,7 @@ import com.ja.programadores.Fragments.DirectFragment;
 import com.ja.programadores.Fragments.HomeFragment;
 import com.ja.programadores.Fragments.ProfileFragment;
 import com.ja.programadores.Fragments.ProfileFragmentOp;
+import com.ja.programadores.Login;
 import com.ja.programadores.R;
 
 public class NavigationDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -134,6 +137,15 @@ public class NavigationDrawer extends AppCompatActivity implements NavigationVie
                 break;
             case R.id.nav_board:
                 ft.replace(R.id.content, new BoardFragment()).commit();
+                break;
+            case R.id.nav_logout:
+                SharedPreferences preferences = getApplicationContext().getSharedPreferences("checkbox", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("remember", "flase");
+                editor.apply();
+                Intent logOut = new Intent(getApplicationContext(), Login.class);
+                startActivity(logOut);
+                finish();
                 break;
         }
         setTitle(item.getTitle());
