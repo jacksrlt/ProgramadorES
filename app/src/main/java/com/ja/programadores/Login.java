@@ -79,7 +79,9 @@ public class Login extends AppCompatActivity {
         if (checkbox.equals("true")) {
 
             Intent intent = new Intent(Login.this, NavigationDrawer.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+            finish();
 
         } else if (checkbox.equals("false")) {
 
@@ -164,6 +166,7 @@ public class Login extends AppCompatActivity {
                                                             Intent intent
                                                                     = new Intent(Login.this,
                                                                     CreateProfile.class);
+                                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                                             startActivity(intent);
                                                             finish();
                                                         } else {
@@ -171,6 +174,7 @@ public class Login extends AppCompatActivity {
                                                                     = new Intent(Login.this,
                                                                     CreateProfileOp.class);
                                                             progressBar.setVisibility(View.INVISIBLE);
+                                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                                             startActivity(intent);
                                                             finish();
                                                         }
@@ -180,6 +184,7 @@ public class Login extends AppCompatActivity {
                                                                 = new Intent(Login.this,
                                                                 NavigationDrawer.class);
                                                         progressBar.setVisibility(View.INVISIBLE);
+                                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                                         startActivity(intent);
                                                         finish();
                                                     }

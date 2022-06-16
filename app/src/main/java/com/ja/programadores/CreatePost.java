@@ -156,6 +156,7 @@ public class CreatePost extends AppCompatActivity {
                                 = new Intent(CreatePost.this,
                                 NavigationDrawer.class);
                         sendBt.setClickable(true);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         finish();
 
@@ -186,6 +187,7 @@ public class CreatePost extends AppCompatActivity {
                     = new Intent(CreatePost.this,
                     NavigationDrawer.class);
             sendBt.setClickable(true);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
 
